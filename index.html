@@ -1,528 +1,391 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>2026 AEC Report</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    :root { --p1: #1e3a8a; --p2: #3b82f6; --acc: #facc15; --succ: #22c55e; --dang: #ef4444; --bg: #f8fafc; }
-    body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    .container { max-width: 500px; margin: 0 auto; padding: 15px; box-sizing: border-box; }
-    .card { background: white; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 20px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
-    h1 { color: var(--p1); text-align: center; font-size: 26px; margin: 15px 0; font-weight: 600; }
-    h2 { font-size: 18px; color: var(--p2); border-left: 5px solid var(--acc); padding-left: 10px; margin-bottom: 20px; }
-    
-    label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px; color: #475569; }
-    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 16px; font-family: 'Kanit'; box-sizing: border-box; margin-bottom: 15px; }
-    input:focus { border-color: var(--p2); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-    
-    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
-    .btn-menu { border: none; border-radius: 18px; padding: 25px 10px; color: white; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: 0.2s; font-weight: 600; font-size: 14px; }
-    .btn-menu:active { transform: scale(0.95); }
-    .bg-blue { background: linear-gradient(135deg, #0284c7, #075985); }
-    .bg-green { background: linear-gradient(135deg, #16a34a, #14532d); }
-    .bg-orange { background: linear-gradient(135deg, #ea580c, #9a3412); }
-    .bg-purple { background: linear-gradient(135deg, #9333ea, #581c87); }
-    .bg-pink { background: linear-gradient(135deg, #db2777, #831843); }
-    .bg-slate { background: linear-gradient(135deg, #475569, #1e293b); }
-    
-    .btn-main { background: var(--p1); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-    .btn-back { background: #e2e8f0; color: #475569; }
-    
-    .preview-box { background: #f1f5f9; border-radius: 12px; padding: 10px; text-align: center; margin-bottom: 15px; display: none; }
-    .preview-img { max-width: 100%; border-radius: 8px; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    
-    #loader { position: fixed; inset: 0; background: rgba(255,255,255,0.8); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
-    .spin { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--p1); border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    
-    .page { display: none; }
-    .active { display: block; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-    table { width: 100%; border-collapse: collapse; font-size: 12px; background: white; }
-    th, td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; }
-    th { background: var(--p1); color: white; }
-    .scroll-x { overflow-x: auto; border-radius: 10px; margin-top: 10px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026 AEC Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --p1: #1e3a8a; --p2: #3b82f6; --acc: #facc15; --succ: #22c55e; --dang: #ef4444; --bg: #f8fafc; }
+        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #1e293b; }
+        .container { max-width: 500px; margin: 0 auto; padding: 15px; }
+        .card { background: white; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 20px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        h1 { color: var(--p1); text-align: center; font-size: 26px; margin: 15px 0; }
+        h2 { font-size: 18px; color: var(--p2); border-left: 5px solid var(--acc); padding-left: 10px; margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px; color: #475569; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 16px; font-family: 'Kanit'; box-sizing: border-box; margin-bottom: 15px; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn-menu { border: none; border-radius: 18px; padding: 25px 10px; color: white; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: 0.2s; font-weight: 600; }
+        .bg-blue { background: linear-gradient(135deg, #0284c7, #075985); }
+        .bg-green { background: linear-gradient(135deg, #16a34a, #14532d); }
+        .bg-orange { background: linear-gradient(135deg, #ea580c, #9a3412); }
+        .bg-purple { background: linear-gradient(135deg, #9333ea, #581c87); }
+        .bg-pink { background: linear-gradient(135deg, #db2777, #831843); }
+        .bg-slate { background: linear-gradient(135deg, #475569, #1e293b); }
+        .btn-main { background: var(--p1); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn-back { background: #e2e8f0; color: #475569; }
+        .preview-box { background: #f1f5f9; border-radius: 12px; padding: 10px; text-align: center; margin-bottom: 15px; display: none; }
+        .preview-img { max-width: 100%; border-radius: 8px; }
+        #loader { position: fixed; inset: 0; background: rgba(255,255,255,0.9); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
+        .spin { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--p1); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .page { display: none; }
+        .active { display: block; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; }
+        th { background: var(--p1); color: white; }
+    </style>
 </head>
 <body>
 
-<div id="loader"><div class="spin"></div><p>กำลังประมวลผล...</p></div>
+<div id="loader"><div class="spin"></div><p>กำลังบันทึกข้อมูล... ห้ามปิดหน้าจอนี้</p></div>
 
 <div class="container">
-  <div id="page-home" class="page active">
-    <h1>2026 AEC Report</h1>
-    <div class="card">
-      <label>ชื่อเล่น (Name)</label>
-      <input type="text" id="main_name" placeholder="ใส่ชื่อเล่นของคุณ">
-      <label>ภาคที่สังกัด (Region)</label>
-      <select id="main_region">
-        <option value="">-- เลือกภาค --</option>
-        <option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option><option>TE</option><option>DR</option><option>OFFICE</option>
-      </select>
-    </div>
-    <div class="menu-grid">
-      <button class="btn-menu bg-blue" onclick="navTo('check', 'Site Check In')"><i class="fas fa-map-marker-alt fa-2x"></i>Site Check In</button>
-      <button class="btn-menu bg-green" onclick="navTo('check', 'Check In')"><i class="fas fa-sign-in-alt fa-2x"></i>Check In</button>
-      <button class="btn-menu bg-orange" onclick="navTo('check', 'Check Out')"><i class="fas fa-sign-out-alt fa-2x"></i>Check Out</button>
-      <button class="btn-menu bg-purple" onclick="navTo('report')"><i class="fas fa-clipboard-list fa-2x"></i>Report</button>
-      <button class="btn-menu bg-pink" onclick="navTo('expenses')"><i class="fas fa-wallet fa-2x"></i>Expenses</button>
-      <button class="btn-menu bg-slate" onclick="navTo('capture')"><i class="fas fa-camera fa-2x"></i>Capture</button>
-    </div>
-  </div>
-
-  <div id="page-check" class="page">
-    <h2 id="check-title">Check In</h2>
-    <div id="check-form-fields"></div>
-    <div class="card">
-      <label>📸 ถ่ายรูปและพิกัด</label>
-      <input type="file" id="check_file" accept="image/*" capture="camera" onchange="previewFile(this, 'check_prev')">
-      <div id="check_prev_div" class="preview-box">
-        <img id="check_prev" class="preview-img">
-        <p id="gps_display" style="font-size:12px; color:var(--p1); margin-top:5px;"></p>
-      </div>
-    </div>
-    <button class="btn-main" onclick="submitCheck()">ส่งข้อมูล</button>
-    <button class="btn-main btn-back" onclick="goHome()">กลับเมนูหลัก</button>
-  </div>
-
-  <div id="page-report" class="page">
-    <h2>📝 รายงานผล (Report)</h2>
-    <div class="card">
-      <label>ทำงานคู่กับใคร (Buddy)</label><input type="text" id="rep_buddy">
-      <label>วันที่ทำงาน</label><input type="date" id="rep_date">
-      <label>ประเภทงาน</label>
-      <select id="rep_job" onchange="toggleDiv('rep_etc_div', this.value==='งาน อื่น ๆ')">
-        <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option>
-      </select>
-      <div id="rep_etc_div" style="display:none;"><label>ระบุชนิดงาน</label><input type="text" id="rep_etc"></div>
-      <label>รายละเอียดงาน</label><textarea id="rep_detail" rows="3"></textarea>
-    </div>
-    <button class="btn-main" onclick="handleReportNext()">ถัดไป ➔</button>
-    <button class="btn-main btn-back" onclick="goHome()">กลับ</button>
-  </div>
-
-  <div id="page-report-cr" class="page">
-    <h2 id="cr-site-title">รายละเอียดงาน CR (ไซต์ที่ 1)</h2>
-    <div class="card" id="cr-form-area">
-      </div>
-    <button class="btn-main" onclick="processCRSite()">ถัดไป / ส่งรายงาน</button>
-  </div>
-
-  <div id="page-expenses" class="page">
-    <h2>💰 ค่าใช้จ่าย (Expenses)</h2>
-    <div id="exp-step-1">
-      <div class="card">
-        <label>ทำงานคู่กับใคร (Buddy)</label><input type="text" id="exp_buddy">
-        <label>ตั้งเบิกวันที่</label><input type="date" id="exp_date">
-        <label>ประเภทงาน</label>
-        <select id="exp_job" onchange="toggleDiv('exp_etc_div', this.value==='งาน อื่น ๆ')">
-          <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option>
-        </select>
-        <div id="exp_etc_div" style="display:none;"><label>ระบุชนิดงาน</label><input type="text" id="exp_etc"></div>
-        <label>รายละเอียดงาน</label><textarea id="exp_detail" rows="2"></textarea>
-      </div>
-      <div class="card">
-        <label>ชื่อไซต์</label><input type="text" id="exp_site">
-        <label>จังหวัด</label><input type="text" id="exp_pv">
-        <label>ค่าน้ำมัน (No.1)</label><input type="number" id="exp_oil" value="0">
-        <label>ค่าที่พัก (No.2)</label><input type="number" id="exp_hotel" value="0">
-        <label>ค่าของประชาคม (No.3)</label><input type="number" id="exp_ccr" value="0">
-        <label>ค่าเดินทาง (No.4)</label><input type="number" id="exp_trav" value="0">
-      </div>
-      <button class="btn-main" onclick="showExpStep(2)">ถัดไป ➔</button>
-    </div>
-
-    <div id="exp-step-2" style="display:none;">
-      <div class="card">
-        <label>ค่าใช้จ่ายพิเศษ</label>
-        <select id="exp_spc_type" onchange="toggleDiv('exp_spc_val_div', this.value!=='ไม่มี')">
-          <option>ไม่มี</option><option>เบิกฉุกเฉิน/เงินทีม/เงินกู้</option><option>ค่าจ้างรายวัน</option><option>ค่าจ้างผู้รับเหมา</option><option>ทำฟัน (สวัสดิการ)</option><option>ค่ารักษาพยาบาล/ค่ายา (สวัสดิการ)</option><option>ค่าสันทนาการ/เลี้ยงรับรอง (อนุมัติแล้ว)</option><option>ของใช้สำนักงาน</option><option>ค่าใช้จ่ายด้านภาษี/ปกส.ของบริษัท</option>
-        </select>
-        <div id="exp_spc_val_div" style="display:none;"><label>จำนวนเงิน (บาท)</label><input type="number" id="exp_spc_val" value="0"></div>
-      </div>
-      <div class="card">
-        <label>ไม่มีบิล (อนุมัติแล้ว)</label>
-        <select id="exp_nb_type" onchange="toggleDiv('exp_nb_val_div', this.value!=='ไม่มี')"><option>ไม่มี</option><option>มีค่าใช้จ่ายที่ไม่มีบิล</option></select>
-        <div id="exp_nb_val_div" style="display:none;">
-          <label>ระบุชื่อค่าใช้จ่าย</label><input type="text" id="exp_nb_name">
-          <label>จำนวนเงิน (บาท)</label><input type="number" id="exp_nb_val" value="0">
+    <div id="page-home" class="page active">
+        <h1>2026 AEC Report</h1>
+        <div class="card">
+            <label>ชื่อเล่น (Name)</label>
+            <input type="text" id="main_name" placeholder="ชื่อเล่นของคุณ">
+            <label>ภาคที่สังกัด (Region)</label>
+            <select id="main_region">
+                <option value="">-- เลือกภาค --</option>
+                <option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option><option>TE</option><option>DR</option><option>OFFICE</option>
+            </select>
         </div>
-      </div>
-      <div class="card">
-        <label>ตั้งเบิกค่าประชาคม</label>
-        <select id="exp_scr_type" onchange="toggleDiv('exp_scr_val_div', this.value!=='ไม่มี')"><option>ไม่มี</option><option>มีตั้งเบิกค่าประชาคม</option></select>
-        <div id="exp_scr_val_div" style="display:none;">
-          <label>ชื่อไซต์</label><input type="text" id="exp_scr_name">
-          <label>วันที่จ่าย</label><input type="date" id="exp_scr_date">
-          <label>จังหวัด</label><input type="text" id="exp_scr_pro">
-          <label>จำนวนเงิน (บาท)</label><input type="number" id="exp_scr_cost" value="0">
+        <div class="menu-grid">
+            <button class="btn-menu bg-blue" onclick="navTo('check', 'Site Check In')"><i class="fas fa-map-marker-alt fa-2x"></i>Site Check In</button>
+            <button class="btn-menu bg-green" onclick="navTo('check', 'Check In')"><i class="fas fa-sign-in-alt fa-2x"></i>Check In</button>
+            <button class="btn-menu bg-orange" onclick="navTo('check', 'Check Out')"><i class="fas fa-sign-out-alt fa-2x"></i>Check Out</button>
+            <button class="btn-menu bg-purple" onclick="navTo('report')"><i class="fas fa-clipboard-list fa-2x"></i>Report</button>
+            <button class="btn-menu bg-pink" onclick="navTo('expenses')"><i class="fas fa-wallet fa-2x"></i>Expenses</button>
+            <button class="btn-menu bg-slate" onclick="navTo('capture')"><i class="fas fa-camera fa-2x"></i>Capture</button>
         </div>
-      </div>
-      <button class="btn-main" onclick="showExpStep(3)">ไปหน้าบันทึกรูป ➔</button>
     </div>
 
-    <div id="exp-step-3" style="display:none;">
-      <div class="card">
-        <label>📸 เลือกรูปบิล (สูงสุด 10 รูป / ไม่เกิน 3MB)</label>
-        <input type="file" id="exp_files" multiple accept="image/*" onchange="previewMultiFile(this)">
-        <div id="exp_multi_prev_div" class="preview-box">
-          <img id="exp_multi_prev" class="preview-img">
-          <p id="exp_count_text"></p>
+    <div id="page-check" class="page">
+        <h2 id="check-title">Check In</h2>
+        <div id="check-form-fields"></div>
+        <div class="card">
+            <label>📸 รูปถ่ายและพิกัด (บังคับ)</label>
+            <input type="file" id="check_file" accept="image/*" capture="camera" onchange="previewFile(this, 'check_prev')">
+            <div id="check_prev_div" class="preview-box">
+                <img id="check_prev" class="preview-img">
+                <p id="gps_display" style="font-size:12px; color:var(--p1);"></p>
+            </div>
         </div>
-      </div>
-      <button class="btn-main" onclick="summarizeExp()">สรุปยอดและส่งข้อมูล ➔</button>
+        <button class="btn-main" onclick="submitCheck()">ส่งข้อมูล</button>
+        <button class="btn-main btn-back" onclick="goHome()">กลับเมนูหลัก</button>
     </div>
 
-    <div id="exp-step-summary" style="display:none;">
-      <div class="card" id="exp_final_summary" style="line-height:1.8;"></div>
-      <button class="btn-main" onclick="submitExp()">ยืนยันส่งข้อมูล</button>
-      <button class="btn-main btn-back" onclick="showExpStep(1)">แก้ไขข้อมูล</button>
+    <div id="page-report" class="page">
+        <h2>📝 ส่งรายงานผล</h2>
+        <div class="card">
+            <label>Buddy (ชื่อเล่น)</label><input type="text" id="rep_buddy">
+            <label>รายงานของวันที่</label><input type="date" id="rep_date">
+            <label>ประเภทงาน</label>
+            <select id="rep_job" onchange="toggleDiv('rep_etc_div', this.value==='งาน อื่น ๆ')">
+                <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option>
+            </select>
+            <div id="rep_etc_div" style="display:none;"><label>ระบุชนิดงาน</label><input type="text" id="rep_etc"></div>
+            <label>รายละเอียดงาน</label><textarea id="rep_detail" rows="3"></textarea>
+        </div>
+        <button class="btn-main" onclick="handleReportNext()">ถัดไป ➔</button>
+        <button class="btn-main btn-back" onclick="goHome()">กลับ</button>
     </div>
-  </div>
 
-  <div id="page-capture" class="page">
-    <h2>📸 Capture Report</h2>
-    <div class="card">
-      <label>เลือกวันที่แสดงรายงาน</label>
-      <select id="cap_date_sel"></select>
-      <button class="btn-main" style="background:#0891b2;" onclick="fetchCaptureData()">ดึงข้อมูล</button>
+    <div id="page-report-cr" class="page">
+        <h2 id="cr-title">รายละเอียดงาน CR ไซต์ที่ 1</h2>
+        <div class="card" id="cr-form-area"></div>
+        <button class="btn-main" onclick="processCRSite()">ถัดไป / ส่งรายงาน</button>
     </div>
-    <div id="cap_results_area" class="scroll-x"></div>
-    <button class="btn-main btn-back" onclick="goHome()" style="margin-top:20px;">กลับเมนูหลัก</button>
-  </div>
 
-  <div id="page-final-1" class="page">
-    <div class="card" style="text-align:center;">
-      <i class="fas fa-check-circle fa-4x" style="color:var(--succ)"></i>
-      <h2>บันทึกข้อมูลสำเร็จ!</h2>
-      <p>ขอขอบคุณที่ร่วมเป็นส่วนหนึ่งของทีมครับ</p>
-      <div style="background:#fff7ed; padding:15px; border-radius:15px; color:#c2410c; font-weight:600; margin:15px 0;">
-        ⚠️ Safety First! ทำงานอย่างปลอดภัยนะครับ
-      </div>
-      <button class="btn-main" onclick="goHome()">กลับเมนูหลัก</button>
+    <div id="page-expenses" class="page">
+        <h2>💰 บันทึกค่าใช้จ่าย</h2>
+        <div id="exp-step-1">
+            <div class="card">
+                <label>Buddy</label><input type="text" id="exp_buddy">
+                <label>เบิกของวันที่</label><input type="date" id="exp_date">
+                <label>ประเภทงาน</label><select id="exp_job"><option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option></select>
+                <label>ชื่อไซต์ / จังหวัด</label><input type="text" id="exp_site" placeholder="ชื่อไซต์"><input type="text" id="exp_pv" placeholder="จังหวัด">
+            </div>
+            <div class="card">
+                <label>น้ำมัน (No.1)</label><input type="number" id="exp_oil" value="0">
+                <label>ที่พัก (No.2)</label><input type="number" id="exp_hotel" value="0">
+                <label>ปชค. (No.3)</label><input type="number" id="exp_ccr" value="0">
+                <label>เดินทาง (No.4)</label><input type="number" id="exp_trav" value="0">
+            </div>
+            <button class="btn-main" onclick="showExpStep(2)">ถัดไป ➔</button>
+        </div>
+        <div id="exp-step-2" style="display:none;">
+            <div class="card">
+                <label>ค่าใช้จ่ายพิเศษ</label>
+                <select id="exp_spc_type"><option>ไม่มี</option><option>เบิกฉุกเฉิน/เงินทีม/เงินกู้</option><option>ค่าจ้างรายวัน</option><option>ค่าจ้างผู้รับเหมา</option><option>ทำฟัน (สวัสดิการ)</option><option>ค่ารักษาพยาบาล/ค่ายา (สวัสดิการ)</option><option>ค่าสันทนาการ/เลี้ยงรับรอง (อนุมัติแล้ว)</option><option>ของใช้สำนักงาน</option><option>ค่าใช้จ่ายด้านภาษี/ปกส.ของบริษัท</option></select>
+                <label>เงินพิเศษ (บาท)</label><input type="number" id="exp_spc_val" value="0">
+                <label>ไม่มีบิล (อนุมัติแล้ว)</label>
+                <input type="text" id="exp_nb_name" placeholder="ระบุรายละเอียดถ้ามี">
+                <label>เงินไม่มีบิล (บาท)</label><input type="number" id="exp_nb_val" value="0">
+            </div>
+            <button class="btn-main" onclick="showExpStep(3)">ไปเลือกรูปบิล ➔</button>
+        </div>
+        <div id="exp-step-3" style="display:none;">
+            <div class="card">
+                <label>📸 รูปบิล (สูงสุด 10 รูป)</label>
+                <input type="file" id="exp_files" multiple accept="image/*" onchange="previewMultiFile(this)">
+                <div id="exp_multi_prev_div" class="preview-box">
+                    <img id="exp_multi_prev" class="preview-img">
+                    <p id="exp_count_text"></p>
+                </div>
+            </div>
+            <button class="btn-main" onclick="summarizeExp()">สรุปและส่ง ➔</button>
+        </div>
+        <div id="exp-step-summary" style="display:none;">
+            <div class="card" id="exp_final_summary"></div>
+            <button class="btn-main" onclick="submitExp()">ยืนยันการส่ง</button>
+            <button class="btn-main btn-back" onclick="showExpStep(1)">แก้ไข</button>
+        </div>
     </div>
-  </div>
 
-  <div id="page-final-2" class="page">
-    <div class="card" style="text-align:center;">
-      <i class="fas fa-paper-plane fa-4x" style="color:var(--p2)"></i>
-      <h2>ส่งข้อมูลเรียบร้อยแล้ว!</h2>
-      <p>เราได้รับข้อมูลของคุณแล้ว ขอบคุณครับ</p>
-      <button class="btn-main" onclick="goHome()">กลับเมนูหลัก</button>
+    <div id="page-capture" class="page">
+        <h2>📸 Capture Report</h2>
+        <div class="card">
+            <label>เลือกวันที่</label><select id="cap_date_sel"></select>
+            <button class="btn-main" style="background:var(--p2)" onclick="fetchCaptureData()">ดึงข้อมูล</button>
+        </div>
+        <div id="cap_results_area" style="overflow-x:auto"></div>
+        <button class="btn-main btn-back" onclick="goHome()">กลับเมนูหลัก</button>
     </div>
-  </div>
 
+    <div id="page-final-1" class="page">
+        <div class="card" style="text-align:center">
+            <i class="fas fa-check-circle fa-4x" style="color:var(--succ)"></i>
+            <h2>สำเร็จ! Safety First</h2>
+            <p>ดูแลสุขภาพและเดินทางปลอดภัยครับ</p>
+            <button class="btn-main" onclick="goHome()">กลับเมนูหลัก</button>
+        </div>
+    </div>
+    <div id="page-final-2" class="page">
+        <div class="card" style="text-align:center">
+            <i class="fas fa-paper-plane fa-4x" style="color:var(--p2)"></i>
+            <h2>ส่งข้อมูลเรียบร้อย!</h2>
+            <p>ขอบคุณสำหรับข้อมูลครับ</p>
+            <button class="btn-main" onclick="goHome()">กลับเมนูหลัก</button>
+        </div>
+    </div>
 </div>
 
 <script>
-  let currentStatus = "";
-  let currentImgs = [];
-  let currentGPS = { stamp: "", code: "", addr: "กำลังค้นหา..." };
-  let crSiteIndex = 1;
-  let crTempData = {};
+    let currentImgs = [];
+    let currentGPS = { stamp: "-", code: "-", addr: "-" };
+    let crSiteIndex = 1;
+    let crTempData = {};
 
-  // Initial
-  window.onload = () => {
-    const savedName = localStorage.getItem('kk02_name');
-    const savedReg = localStorage.getItem('kk02_region');
-    if(savedName) document.getElementById('main_name').value = savedName;
-    if(savedReg) document.getElementById('main_region').value = savedReg;
-
-    // Date Dropdown for Capture
-    const sel = document.getElementById('cap_date_sel');
-    for(let i=0; i<8; i++) {
-      let d = new Date(); d.setDate(d.getDate() - i);
-      let ds = d.toLocaleDateString('th-TH');
-      sel.innerHTML += `<option value="${ds}">${ds}</option>`;
-    }
-  };
-
-  function saveProfile() {
-    const name = document.getElementById('main_name').value;
-    const reg = document.getElementById('main_region').value;
-    if(!name || !reg) { alert("กรุณากรอกชื่อและเลือกภาค"); return null; }
-    localStorage.setItem('kk02_name', name);
-    localStorage.setItem('kk02_region', reg);
-    return { name, reg };
-  }
-
-  function navTo(pageId, status = "") {
-    if(!saveProfile()) return;
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + pageId).classList.add('active');
-    if(status) {
-      currentStatus = status;
-      document.getElementById('check-title').innerText = status;
-      renderCheckForm(status);
-    }
-    window.scrollTo(0,0);
-  }
-
-  function renderCheckForm(status) {
-    const area = document.getElementById('check-form-fields');
-    if(status === 'Site Check In') {
-      area.innerHTML = "";
-    } else {
-      const isOut = status.includes('Out');
-      area.innerHTML = `
-        <div class="card">
-          <label>ทำงานกับใคร</label><input type="text" id="c_buddy">
-          <label>ใช้รถใคร</label><input type="text" id="c_car">
-          <label>เลขไมล์</label><input type="number" id="c_mile">
-          <label>สถานที่ ${status}</label><input type="text" id="c_place">
-          <label>${isOut ? 'BRIFE' : 'PLAN'}</label><textarea id="c_plan"></textarea>
-        </div>
-      `;
-    }
-    currentImgs = [];
-    document.getElementById('check_prev_div').style.display = 'none';
-  }
-
-  async function previewFile(input, imgId) {
-    if(input.files && input.files[0]) {
-      const file = input.files[0];
-      if(file.size > 3*1024*1024) { alert("ไฟล์ใหญ่เกิน 3MB"); input.value=""; return; }
-      
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        document.getElementById(imgId).src = e.target.result;
-        document.getElementById(imgId + '_div').style.display = 'block';
-        currentImgs = [e.target.result];
-      };
-      reader.readAsDataURL(file);
-      getGPS();
-    }
-  }
-
-  async function previewMultiFile(input) {
-    currentImgs = [];
-    if(input.files.length > 10) { alert("เลือกได้ไม่เกิน 10 รูป"); input.value=""; return; }
-    
-    for(let f of input.files) {
-      if(f.size > 3*1024*1024) continue;
-      const b64 = await new Promise(r => {
-        const rd = new FileReader(); rd.onload = () => r(rd.result); rd.readAsDataURL(f);
-      });
-      currentImgs.push(b64);
-    }
-    if(currentImgs.length > 0) {
-      document.getElementById('exp_multi_prev').src = currentImgs[0];
-      document.getElementById('exp_multi_prev_div').style.display = 'block';
-      document.getElementById('exp_count_text').innerText = `เลือกทั้งหมด ${currentImgs.length} รูป (แสดงรูปแรก)`;
-    }
-  }
-
-  function getGPS() {
-    document.getElementById('gps_display').innerText = "⌛ กำลังดึงพิกัด...";
-    navigator.geolocation.getCurrentPosition(pos => {
-      currentGPS.code = pos.coords.latitude + "," + pos.coords.longitude;
-      currentGPS.stamp = new Date().toLocaleString('th-TH');
-      document.getElementById('gps_display').innerText = "📍 " + currentGPS.code;
-    }, err => {
-      currentGPS.code = "0,0";
-      document.getElementById('gps_display').innerText = "❌ ไม่สามารถดึงพิกัดได้";
-    }, {enableHighAccuracy: true});
-  }
-
-  function submitCheck() {
-    const prof = saveProfile();
-    if(currentImgs.length === 0) { alert("กรุณาเลือกรูปภาพ"); return; }
-    
-    const payload = {
-      date: new Date().toLocaleDateString('th-TH'),
-      time: new Date().toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}),
-      name: prof.name, region: prof.reg, status: currentStatus,
-      geoStamp: currentGPS.stamp, geoCode: currentGPS.code, geoAddress: currentGPS.addr,
-      device: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "PC",
-      images: currentImgs,
-      buddy: document.getElementById('c_buddy')?.value || "",
-      car: document.getElementById('c_car')?.value || "",
-      mileage: document.getElementById('c_mile')?.value || "",
-      place: document.getElementById('c_place')?.value || "",
-      plan: document.getElementById('c_plan')?.value || ""
+    window.onload = () => {
+        document.getElementById('main_name').value = localStorage.getItem('kk_name') || "";
+        document.getElementById('main_region').value = localStorage.getItem('kk_reg') || "";
+        const sel = document.getElementById('cap_date_sel');
+        for(let i=0; i<8; i++) {
+            let d = new Date(); d.setDate(d.getDate() - i);
+            let ds = d.toLocaleDateString('th-TH');
+            sel.innerHTML += `<option value="${ds}">${ds}</option>`;
+        }
     };
-    
-    const finalType = currentStatus.includes('Out') ? '2' : '1';
-    callGas(payload, finalType);
-  }
 
-  // --- ส่วนที่ 4: Report ---
-  function handleReportNext() {
-    const job = document.getElementById('rep_job').value;
-    if(job === 'งาน CR') {
-      crSiteIndex = 1;
-      crTempData = {};
-      navTo('report-cr');
-      renderCRSiteForm(1);
-    } else {
-      submitReportGeneric();
+    function navTo(p, status = "") {
+        const name = document.getElementById('main_name').value;
+        const reg = document.getElementById('main_region').value;
+        if(!name || !reg) { alert("กรุณาระบุชื่อและภาคสังกัด"); return; }
+        localStorage.setItem('kk_name', name);
+        localStorage.setItem('kk_reg', reg);
+        
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + p).classList.add('active');
+        if(status) {
+            currentStatus = status;
+            document.getElementById('check-title').innerText = status;
+            renderCheckForm(status);
+        }
+        window.scrollTo(0,0);
     }
-  }
 
-  function renderCRSiteForm(n) {
-    document.getElementById('cr-site-title').innerText = `รายละเอียดงาน CR (ไซต์ที่ ${n})`;
-    const area = document.getElementById('cr-form-area');
-    area.innerHTML = `
-      ${n===1 ? `<label>ทำงานของภาค</label><select id="s_reg"><option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option></select>` : ''}
-      <label>ชื่อไซต์</label><input type="text" id="s_name">
-      <label>จังหวัด</label><input type="text" id="s_prov">
-      <label>เนื้องาน</label>
-      <select id="s_job" onchange="toggleDiv('s_etc_site_div', this.value==='อื่น ๆ')">
-        <option>ไม่ได้ลงพื้นที่ โทรติดต่อนัดประชาคม</option><option>ลงพื้นที่ทำ CR - CRL</option><option>ลงพื้นที่ทำ CR + นัดประชาคม</option><option>ลงพื้นที่ ทำประชาคม</option><option>ลงพื้นที่ทำ CR + ทำประชาคม</option><option>ลงพื้นที่ เพื่อทำงานหาที่ SA</option><option>ลงพื้นที่ เคลียร์ประเด็น (ขออนุมัติแล้ว)</option><option>อื่น ๆ</option>
-      </select>
-      <div id="s_etc_site_div" style="display:none;"><label>ระบุชนิดงาน</label><input type="text" id="s_etc_site"></div>
-      <label>ระบุรายละเอียดงาน</label><input type="text" id="s_detail">
-      <label>ชื่อผู้นำ-และเบอร์โทร</label><input type="text" id="s_ld">
-      ${n < 4 ? `<label>มีไซต์ที่ ${n+1} หรือไม่</label><select id="s_next"><option value="no">ไม่มี/ส่งรายงาน</option><option value="yes">มีไซต์ที่ ${n+1}</option></select>` : ''}
-    `;
-  }
-
-  function processCRSite() {
-    const n = crSiteIndex;
-    if(n === 1) crTempData[18] = document.getElementById('s_reg').value;
-    
-    const startIdx = 19 + (n-1)*6; // T, U, V, W, X, Y...
-    crTempData[startIdx] = document.getElementById('s_name').value;
-    crTempData[startIdx+1] = document.getElementById('s_prov').value;
-    crTempData[startIdx+2] = document.getElementById('s_job').value;
-    crTempData[startIdx+3] = document.getElementById('s_etc_site')?.value || "";
-    crTempData[startIdx+4] = document.getElementById('s_detail').value;
-    crTempData[startIdx+5] = document.getElementById('s_ld').value;
-
-    const next = document.getElementById('s_next')?.value || 'no';
-    if(next === 'yes' && n < 4) {
-      crSiteIndex++;
-      renderCRSiteForm(crSiteIndex);
-      window.scrollTo(0,0);
-    } else {
-      submitReportGeneric(crTempData);
+    function renderCheckForm(s) {
+        const area = document.getElementById('check-form-fields');
+        area.innerHTML = s==='Site Check In' ? '' : `
+            <div class="card">
+                <label>Buddy</label><input type="text" id="c_buddy">
+                <label>รถ</label><input type="text" id="c_car">
+                <label>เลขไมล์</label><input type="number" id="c_mile">
+                <label>สถานที่</label><input type="text" id="c_place">
+                <label>${s.includes('Out') ? 'BRIFE' : 'PLAN'}</label><textarea id="c_plan"></textarea>
+            </div>`;
+        currentImgs = [];
+        document.getElementById('check_prev_div').style.display='none';
     }
-  }
 
-  function submitReportGeneric(crData = {}) {
-    const prof = saveProfile();
-    const payload = {
-      date: formatDate(document.getElementById('rep_date').value),
-      time: "", name: prof.name, region: prof.reg, status: "Report",
-      device: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "PC",
-      buddy: document.getElementById('rep_buddy').value,
-      extra: {
-        15: document.getElementById('rep_job').value,
-        16: document.getElementById('rep_etc')?.value || "",
-        17: document.getElementById('rep_detail').value,
-        ...crData
-      }
-    };
-    callGas(payload, '2');
-  }
+    function previewFile(input, id) {
+        if(input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById(id).src = e.target.result;
+                document.getElementById(id+'_div').style.display='block';
+                currentImgs = [e.target.result];
+            };
+            reader.readAsDataURL(input.files[0]);
+            getGPS();
+        }
+    }
 
-  // --- ส่วนที่ 5: Expenses ---
-  function showExpStep(n) {
-    document.getElementById('exp-step-1').style.display = n===1 ? 'block' : 'none';
-    document.getElementById('exp-step-2').style.display = n===2 ? 'block' : 'none';
-    document.getElementById('exp-step-3').style.display = n===3 ? 'block' : 'none';
-    document.getElementById('exp-step-summary').style.display = 'none';
-    window.scrollTo(0,0);
-  }
+    async function previewMultiFile(input) {
+        currentImgs = [];
+        for(let f of input.files) {
+            if(currentImgs.length >= 10) break;
+            const b64 = await new Promise(r => {
+                const rd = new FileReader(); rd.onload = () => r(rd.result); rd.readAsDataURL(f);
+            });
+            currentImgs.push(b64);
+        }
+        document.getElementById('exp_multi_prev').src = currentImgs[0];
+        document.getElementById('exp_multi_prev_div').style.display='block';
+        document.getElementById('exp_count_text').innerText = `เลือกแล้ว ${currentImgs.length} รูป`;
+    }
 
-  function summarizeExp() {
-    if(currentImgs.length === 0) { alert("กรุณาเลือกรูปบิล"); return; }
-    const oil = Number(document.getElementById('exp_oil').value) || 0;
-    const hot = Number(document.getElementById('exp_hotel').value) || 0;
-    const ccr = Number(document.getElementById('exp_ccr').value) || 0;
-    const trv = Number(document.getElementById('exp_trav').value) || 0;
-    const spc = Number(document.getElementById('exp_spc_val').value) || 0;
-    const nb = Number(document.getElementById('exp_nb_val').value) || 0;
-    const scr = Number(document.getElementById('exp_scr_cost').value) || 0;
-    const total = oil+hot+ccr+trv+spc+nb+scr;
+    function getGPS() {
+        document.getElementById('gps_display').innerText = "กำลังหาพิกัด...";
+        navigator.geolocation.getCurrentPosition(p => {
+            currentGPS.code = p.coords.latitude + "," + p.coords.longitude;
+            currentGPS.stamp = new Date().toLocaleString('th-TH');
+            document.getElementById('gps_display').innerText = "📍 " + currentGPS.code;
+        }, () => {
+            currentGPS.code = "0,0"; document.getElementById('gps_display').innerText = "หาพิกัดไม่พบ";
+        }, {enableHighAccuracy: true});
+    }
 
-    let html = `<h3>📊 สรุปค่าใช้จ่าย</h3><hr>`;
-    if(oil>0) html += `<p>ค่าน้ำมัน: ${oil} บาท</p>`;
-    if(hot>0) html += `<p>ค่าที่พัก: ${hot} บาท</p>`;
-    if(ccr>0) html += `<p>ค่าของประชาคม: ${ccr} บาท</p>`;
-    if(trv>0) html += `<p>ค่าเดินทาง: ${trv} บาท</p>`;
-    if(spc>0) html += `<p>ค่าพิเศษ (${document.getElementById('exp_spc_type').value}): ${spc} บาท</p>`;
-    if(nb>0) html += `<p>ไม่มีบิล (${document.getElementById('exp_nb_name').value}): ${nb} บาท</p>`;
-    if(scr>0) html += `<p>ค่าปชค. (${document.getElementById('exp_scr_name').value}): ${scr} บาท</p>`;
-    html += `<hr><p style="font-size:20px; color:var(--dang)"><b>ยอดรวม: ${total} บาท</b></p>`;
-    html += `<p>จำนวนรูป: ${currentImgs.length} รูป</p>`;
+    function callGas(payload, type) {
+        document.getElementById('loader').style.display='flex';
+        google.script.run
+            .withSuccessHandler(res => {
+                document.getElementById('loader').style.display='none';
+                if(res.success) navTo('final-'+type);
+                else alert("ค้างเพราะ: " + res.error);
+            })
+            .withFailureHandler(err => {
+                document.getElementById('loader').style.display='none';
+                alert("ระบบขัดข้อง: " + err.message);
+            })
+            .processForm(payload);
+    }
 
-    document.getElementById('exp_final_summary').innerHTML = html;
-    document.getElementById('exp-step-3').style.display = 'none';
-    document.getElementById('exp-step-summary').style.display = 'block';
-  }
+    function submitCheck() {
+        if(currentImgs.length===0) { alert("กรุณาถ่ายรูป"); return; }
+        const payload = {
+            date: new Date().toLocaleDateString('th-TH'),
+            time: new Date().toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}),
+            name: document.getElementById('main_name').value,
+            region: document.getElementById('main_region').value,
+            status: currentStatus, geoStamp: currentGPS.stamp, geoCode: currentGPS.code, geoAddress: "-",
+            device: "Mobile/PC", images: currentImgs,
+            buddy: document.getElementById('c_buddy')?.value || "",
+            car: document.getElementById('c_car')?.value || "",
+            mileage: document.getElementById('c_mile')?.value || "",
+            place: document.getElementById('c_place')?.value || "",
+            plan: document.getElementById('c_plan')?.value || ""
+        };
+        callGas(payload, currentStatus.includes('Out') ? '2' : '1');
+    }
 
-  function submitExp() {
-    const prof = saveProfile();
-    const payload = {
-      date: formatDate(document.getElementById('exp_date').value),
-      time: "", name: prof.name, region: prof.reg, status: "Expenses",
-      device: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "PC",
-      buddy: document.getElementById('exp_buddy').value,
-      images: currentImgs,
-      extra: {
-        15: document.getElementById('exp_job').value,
-        16: document.getElementById('exp_etc')?.value || "",
-        17: document.getElementById('exp_detail').value,
-        43: document.getElementById('exp_site').value,
-        44: document.getElementById('exp_pv').value,
-        45: document.getElementById('exp_oil').value,
-        46: document.getElementById('exp_hotel').value,
-        47: document.getElementById('exp_ccr').value,
-        48: document.getElementById('exp_trav').value,
-        49: document.getElementById('exp_spc_type').value,
-        50: document.getElementById('exp_spc_val').value,
-        51: document.getElementById('exp_nb_name').value,
-        52: document.getElementById('exp_nb_val').value,
-        53: document.getElementById('exp_scr_type').value,
-        54: document.getElementById('exp_scr_name').value,
-        55: formatDate(document.getElementById('exp_scr_date').value),
-        56: document.getElementById('exp_scr_pro').value,
-        57: document.getElementById('exp_scr_cost').value
-      }
-    };
-    callGas(payload, '2');
-  }
+    function handleReportNext() {
+        if(document.getElementById('rep_job').value==='งาน CR') {
+            crSiteIndex = 1; crTempData = {}; navTo('report-cr'); renderCRSiteForm(1);
+        } else {
+            submitReportGeneric();
+        }
+    }
 
-  // --- ส่วนที่ 6: Capture ---
-  function fetchCaptureData() {
-    const date = document.getElementById('cap_date_sel').value;
-    document.getElementById('loader').style.display = 'flex';
-    google.script.run.withSuccessHandler(res => {
-      document.getElementById('loader').style.display = 'none';
-      if(res.rows.length === 0) { 
-        document.getElementById('cap_results_area').innerHTML = "<p style='text-align:center; padding:20px;'>ไม่พบข้อมูลของวันนี้</p>";
-        return; 
-      }
-      let h = "<table><tr>" + res.headers.slice(0,15).map(t => `<th>${t}</th>`).join('') + "</tr>";
-      res.rows.forEach(r => {
-        h += "<tr>" + r.slice(0,15).map(v => `<td>${v}</td>`).join('') + "</tr>";
-      });
-      h += "</table>";
-      document.getElementById('cap_results_area').innerHTML = h;
-    }).getCaptureData(date);
-  }
+    function renderCRSiteForm(n) {
+        const area = document.getElementById('cr-form-area');
+        area.innerHTML = `
+            ${n===1 ? '<label>ทำงานของภาค</label><select id="s_reg"><option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option></select>' : ''}
+            <label>ชื่อไซต์</label><input type="text" id="s_name">
+            <label>จังหวัด</label><input type="text" id="s_prov">
+            <label>เนื้องาน</label><select id="s_job"><option>ลงพื้นที่ทำ CR - CRL</option><option>ลงพื้นที่ ทำประชาคม</option><option>อื่น ๆ</option></select>
+            <label>รายละเอียด</label><input type="text" id="s_det">
+            <label>ชื่อผู้นำ</label><input type="text" id="s_ld">
+            ${n<4 ? '<label>มีไซต์ถัดไปหรือไม่?</label><select id="s_next"><option value="no">ไม่มี/ส่งรายงาน</option><option value="yes">มีไซต์ที่ '+(n+1)+'</option></select>' : ''}
+        `;
+    }
 
-  // Common Functions
-  function callGas(payload, finalType) {
-    document.getElementById('loader').style.display = 'flex';
-    google.script.run.withSuccessHandler(res => {
-      document.getElementById('loader').style.display = 'none';
-      if(res.success) navTo('final-' + finalType);
-      else alert("Error: " + res.error);
-    }).withFailureHandler(err => {
-      document.getElementById('loader').style.display = 'none';
-      alert("System Error: " + err);
-    }).processForm(payload);
-  }
+    function processCRSite() {
+        let n = crSiteIndex;
+        if(n===1) crTempData[18] = document.getElementById('s_reg').value;
+        let start = 19 + (n-1)*6;
+        crTempData[start] = document.getElementById('s_name').value;
+        crTempData[start+1] = document.getElementById('s_prov').value;
+        crTempData[start+2] = document.getElementById('s_job').value;
+        crTempData[start+4] = document.getElementById('s_det').value;
+        crTempData[start+5] = document.getElementById('s_ld').value;
+        
+        if(document.getElementById('s_next')?.value==='yes') {
+            crSiteIndex++; renderCRSiteForm(crSiteIndex);
+        } else {
+            submitReportGeneric(crTempData);
+        }
+    }
 
-  function toggleDiv(id, show) { document.getElementById(id).style.display = show ? 'block' : 'none'; }
-  function formatDate(val) { if(!val) return ""; const p = val.split('-'); return `${p[2]}/${p[1]}/${p[0]}`; }
-  function goHome() { location.reload(); }
+    function submitReportGeneric(extraData = {}) {
+        const payload = {
+            date: formatDate(document.getElementById('rep_date').value),
+            name: document.getElementById('main_name').value,
+            region: document.getElementById('main_region').value,
+            status: "Report",
+            buddy: document.getElementById('rep_buddy').value,
+            extra: { 15: document.getElementById('rep_job').value, 17: document.getElementById('rep_detail').value, ...extraData }
+        };
+        callGas(payload, '2');
+    }
+
+    function showExpStep(n) {
+        ['exp-step-1','exp-step-2','exp-step-3','exp-step-summary'].forEach(id => document.getElementById(id).style.display='none');
+        document.getElementById('exp-step-'+(n===summary ? 'summary' : n)).style.display='block';
+        if(n===summary) summarizeExp();
+    }
+
+    function summarizeExp() {
+        const oil = Number(document.getElementById('exp_oil').value);
+        const hot = Number(document.getElementById('exp_hotel').value);
+        const ccr = Number(document.getElementById('exp_ccr').value);
+        const trv = Number(document.getElementById('exp_trav').value);
+        const total = oil+hot+ccr+trv;
+        document.getElementById('exp_final_summary').innerHTML = `<h3>สรุปยอดเบิก</h3><p>ยอดรวม: ${total} บาท</p><p>จำนวนรูป: ${currentImgs.length}</p>`;
+        document.getElementById('exp-step-3').style.display='none';
+        document.getElementById('exp-step-summary').style.display='block';
+    }
+
+    function submitExp() {
+        const payload = {
+            date: formatDate(document.getElementById('exp_date').value),
+            name: document.getElementById('main_name').value,
+            region: document.getElementById('main_region').value,
+            status: "Expenses", images: currentImgs,
+            extra: { 43: document.getElementById('exp_site').value, 45: document.getElementById('exp_oil').value, 46: document.getElementById('exp_hotel').value }
+        };
+        callGas(payload, '2');
+    }
+
+    function fetchCaptureData() {
+        const d = document.getElementById('cap_date_sel').value;
+        document.getElementById('loader').style.display='flex';
+        google.script.run.withSuccessHandler(res => {
+            document.getElementById('loader').style.display='none';
+            let html = "<table><tr>" + res.headers.slice(0,5).map(h => `<th>${h}</th>`).join('') + "</tr>";
+            res.rows.forEach(r => { html += "<tr>" + r.slice(0,5).map(v => `<td>${v}</td>`).join('') + "</tr>"; });
+            document.getElementById('cap_results_area').innerHTML = html + "</table>";
+        }).getCaptureData(d);
+    }
+
+    function formatDate(v) { if(!v) return ""; const p = v.split('-'); return `${p[2]}/${p[1]}/${p[0]}`; }
+    function toggleDiv(id, s) { document.getElementById(id).style.display = s?'block':'none'; }
+    function goHome() { location.reload(); }
 </script>
+
 </body>
 </html>
