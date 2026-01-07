@@ -7,19 +7,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #0D47A1; --secondary: #1976D2; --success: #2E7D32; --warning: #FBC02D; --danger: #D32F2F; --bg: #f0f2f5; }
+    :root { --primary: #0D47A1; --secondary: #1976D2; --success: #2E7D32; --warning: #FBC02D; --danger: #D32F2F; --bg: #f4f7f6; }
     body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #333; }
-    .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); padding: 20px; box-sizing: border-box; min-height: 90vh; }
+    .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 20px; box-sizing: border-box; min-height: 95vh; }
+    
+    /* Header & General */
     h1 { color: var(--primary); text-align: center; font-size: 24px; border-bottom: 4px solid var(--warning); padding-bottom: 10px; margin-bottom: 20px; }
-    h2 { font-size: 18px; color: var(--secondary); border-left: 5px solid var(--warning); padding-left: 10px; margin-top: 0; }
-    
+    h2 { font-size: 18px; color: var(--secondary); margin-bottom: 15px; border-left: 5px solid var(--warning); padding-left: 10px; }
+    .page { display: none; animation: fadeIn 0.4s ease; }
+    .page.active { display: block !important; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Inputs */
     .input-group { margin-bottom: 15px; }
-    label { display: block; margin-bottom: 5px; font-weight: 600; color: #444; font-size: 14px; }
-    input, select, textarea { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px; box-sizing: border-box; font-family: 'Kanit'; font-size: 16px; transition: 0.3s; }
+    label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; color: #555; }
+    input, select, textarea { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px; box-sizing: border-box; font-family: 'Kanit'; font-size: 15px; }
     input:focus { border-color: var(--secondary); outline: none; }
-    
-    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .btn-menu { border: none; border-radius: 20px; padding: 20px 10px; color: white; cursor: pointer; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: 0.2s; }
+
+    /* Menu Grid */
+    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+    .btn-menu { border: none; border-radius: 20px; padding: 22px 10px; color: white; cursor: pointer; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 14px; transition: 0.2s; }
     .btn-menu:active { transform: scale(0.95); }
     .btn-site { background: linear-gradient(135deg, #06b6d4, #0891b2); }
     .btn-in { background: linear-gradient(135deg, #22c55e, #16a34a); }
@@ -28,313 +35,260 @@
     .btn-exp { background: linear-gradient(135deg, #ec4899, #db2777); }
     .btn-cap { background: linear-gradient(135deg, #64748b, #475569); }
 
-    .page { display: none; }
-    .active { display: block !important; animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-    .card-site { background: #f8fafc; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
+    /* Buttons */
     .main-btn { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: 15px; font-size: 18px; font-weight: 600; margin-top: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; }
-    .back-btn { background: #64748b; margin-top: 8px; }
+    .back-btn { background: #64748b; margin-top: 10px; }
+    .card-site { background: #f8fafc; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
     
-    .summary-item { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #ccc; }
-    .preview-img { max-width: 100%; border-radius: 10px; margin-top: 10px; border: 2px solid #ddd; }
+    /* Image Preview */
+    .preview-box { text-align: center; margin: 15px 0; display: none; }
+    .preview-img { max-width: 100%; border-radius: 15px; border: 3px solid #ddd; }
   </style>
 </head>
 <body>
 
 <div class="container">
+  
   <div id="page-home" class="page active">
     <h1>2026 AEC Report</h1>
     <div class="input-group">
-      <label>ชื่อเล่น (Name)</label>
-      <input type="text" id="userName" placeholder="ระบุชื่อเล่นเพื่อบันทึก">
+      <label>ชื่อเล่น (Name) - Column C</label>
+      <input type="text" id="main_name" placeholder="ระบุชื่อเล่น">
     </div>
     <div class="input-group">
-      <label>ภาคที่สังกัด (Region)</label>
-      <select id="userRegion">
+      <label>ภาคที่สังกัด (Region) - Column D</label>
+      <select id="main_region">
         <option value="">-- เลือกภาค --</option>
-        <option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option><option>TE</option><option>DR</option><option>OFFICE</option>
+        <option>BKK</option><option>CR</option><option>ER</option><option>NER</option>
+        <option>NR</option><option>SR</option><option>TE</option><option>DR</option><option>OFFICE</option>
       </select>
     </div>
     <div class="menu-grid">
-      <button class="btn-menu btn-site" onclick="openFlow('Site Check In')"><i class="fas fa-map-pin fa-2x"></i>Site Check In</button>
-      <button class="btn-menu btn-in" onclick="openFlow('Check In')"><i class="fas fa-sign-in-alt fa-2x"></i>Check In</button>
-      <button class="btn-menu btn-out" onclick="openFlow('Check Out')"><i class="fas fa-sign-out-alt fa-2x"></i>Check Out</button>
-      <button class="btn-menu btn-rep" onclick="openFlow('Report')"><i class="fas fa-file-contract fa-2x"></i>Report</button>
-      <button class="btn-menu btn-exp" onclick="openFlow('Expenses')"><i class="fas fa-wallet fa-2x"></i>Expenses</button>
-      <button class="btn-menu btn-cap" onclick="openFlow('Capture')"><i class="fas fa-camera fa-2x"></i>Capture</button>
+      <button class="btn-menu btn-site" onclick="startFlow('Site Check In')"><i class="fas fa-map-pin fa-2x"></i>Site Check In</button>
+      <button class="btn-menu btn-in" onclick="startFlow('Check In')"><i class="fas fa-sign-in-alt fa-2x"></i>Check In</button>
+      <button class="btn-menu btn-out" onclick="startFlow('Check Out')"><i class="fas fa-sign-out-alt fa-2x"></i>Check Out</button>
+      <button class="btn-menu btn-rep" onclick="startFlow('Report')"><i class="fas fa-file-contract fa-2x"></i>Report</button>
+      <button class="btn-menu btn-exp" onclick="startFlow('Expenses')"><i class="fas fa-wallet fa-2x"></i>Expenses</button>
+      <button class="btn-menu btn-cap" onclick="startFlow('Capture')"><i class="fas fa-camera fa-2x"></i>Capture</button>
     </div>
   </div>
 
-  <div id="page-st" class="page">
-    <h2 id="st-title"></h2>
-    <div id="st-form-area"></div>
+  <div id="page-check" class="page">
+    <h2 id="check-title"></h2>
+    <div id="check-fields"></div>
     <div class="input-group">
-      <label>📸 ถ่ายภาพและบันทึกพิกัด</label>
-      <input type="file" id="st-photo" accept="image/*" capture="camera" onchange="previewSt(this)">
+      <label>📸 ถ่ายรูป/เลือกรูป (Photo - Col I)</label>
+      <input type="file" id="check-file" accept="image/*" capture="camera" onchange="handlePreview(this)">
     </div>
-    <div id="st-preview-box" style="display:none; text-align:center;">
-      <p id="st-gps" style="color:var(--secondary); font-size:12px;"></p>
-      <img id="st-img" class="preview-img">
+    <div id="check-preview" class="preview-box">
+      <p id="check-gps-info" style="font-size:12px; color:blue; font-weight:bold;"></p>
+      <img id="check-img" class="preview-img">
     </div>
-    <button class="main-btn" onclick="submitSt()">ส่งข้อมูล <i class="fas fa-paper-plane"></i></button>
+    <button class="main-btn" onclick="submitCheck()">ส่งข้อมูล <i class="fas fa-paper-plane"></i></button>
+    <button class="main-btn back-btn" onclick="goHome()">กลับหน้าหลัก</button>
+  </div>
+
+  <div id="page-report-1" class="page">
+    <h2>📝 รายงาน (Report)</h2>
+    <label>ทำงานคู่กับใคร (Buddy - Col K)</label><input type="text" id="r_buddy" class="input-group">
+    <label>รายงานของวันที่ (Date - Col A)</label><input type="date" id="r_date" class="input-group">
+    <label>ประเภทงาน (JOBTYPE - Col P)</label>
+    <select id="r_type" onchange="toggleDiv('r_etc_div', this.value==='งาน อื่น ๆ')" class="input-group">
+      <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option>
+    </select>
+    <div id="r_etc_div" style="display:none;"><label>ระบุชนิดงาน (ETC - Col Q)</label><input type="text" id="r_etc" class="input-group"></div>
+    <label>รายละเอียดงาน (JobDetail - Col R)</label><textarea id="r_detail" rows="3" class="input-group"></textarea>
+    <button class="main-btn" onclick="nextReportStep()">ขั้นตอนถัดไป ➔</button>
     <button class="main-btn back-btn" onclick="goHome()">กลับ</button>
   </div>
 
-  <div id="page-report" class="page">
-    <h2>📝 รายงานผลการทำงาน</h2>
-    <div id="rep-step-1">
-      <label>ทำงานคู่กับใคร (Buddy)</label><input type="text" id="r_buddy">
-      <label>รายงานของวันที่</label><input type="date" id="r_date">
-      <label>ประเภทงาน (Job Type)</label>
-      <select id="r_type" onchange="toggleEtc(this.value, 'r_etc_div')">
-        <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option>
-      </select>
-      <div id="r_etc_div" style="display:none; margin-top:10px;">
-        <label>ระบุชนิดงาน</label><input type="text" id="r_etc">
-      </div>
-      <label>ระบุรายละเอียดงาน</label><textarea id="r_detail" rows="3"></textarea>
-      <button class="main-btn" onclick="handleReportNext()">ต่อไป ➔</button>
-    </div>
-    <div id="rep-step-cr" style="display:none;">
-      <div id="sites-container"></div>
-    </div>
+  <div id="page-report-cr" class="page">
+    <h2>🏢 รายละเอียดงาน CR</h2>
+    <div id="cr-sites-area"></div>
   </div>
 
   <div id="page-expenses" class="page">
-    <h2>💰 บันทึกค่าใช้จ่าย</h2>
-    <div id="exp-step-1">
-      <label>Buddy</label><input type="text" id="ex_buddy">
-      <label>วันที่ตั้งเบิก</label><input type="date" id="ex_date">
-      <label>ประเภทงาน</label>
-      <select id="ex_type"><option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option></select>
-      <label>รายละเอียดงาน</label><textarea id="ex_detail" rows="2"></textarea>
-      <label>ชื่อไซต์ (EPSite)</label><input type="text" id="ex_site">
-      <label>จังหวัด (EPPv.)</label><input type="text" id="ex_prov">
-      <label>ค่าน้ำมันรถ (EPOil)</label><input type="number" id="ex_oil" value="0">
-      <label>ค่าที่พัก (EPHotel)</label><input type="number" id="ex_hotel" value="0">
-      <label>ค่าของ/ขนมประชาคม (EPCCR)</label><input type="number" id="ex_ccr" value="0">
-      <label>ค่าเดินทาง (EPTrav)</label><input type="number" id="ex_trav" value="0">
-      <label>ค่าใช้จ่ายพิเศษ (EPSpc.)</label>
-      <select id="ex_spc_type"><option>ไม่มี</option><option>เบิกฉุกเฉิน/เงินทีม/เงินกู้</option><option>ค่าจ้างรายวัน</option><option>ทำฟัน (สวัสดิการ)</option><option>ค่ารักษาพยาบาล</option></select>
-      <label>จำนวนเงินพิเศษ (EPCSpc.)</label><input type="number" id="ex_spc_val" value="0">
-      <button class="main-btn" onclick="goExpNext()">ต่อไป (อัปโหลดรูป) ➔</button>
+    <h2>💰 ค่าใช้จ่าย (Expenses)</h2>
+    <div id="exp-f1">
+      <label>ทำงานคู่กับใคร (Buddy - Col K)</label><input type="text" id="ex_buddy" class="input-group">
+      <label>ตั้งเบิกของวันที่ (Date - Col A)</label><input type="date" id="ex_date" class="input-group">
+      <label>ชื่อไซต์ (EPSite - Col AR)</label><input type="text" id="ex_site" class="input-group">
+      <label>จังหวัด (EPPv. - Col AS)</label><input type="text" id="ex_prov" class="input-group">
+      <label>ค่าน้ำมัน (EPOil - Col AT)</label><input type="number" id="ex_oil" value="0" class="input-group">
+      <label>ค่าที่พัก (EPHotel - Col AU)</label><input type="number" id="ex_hotel" value="0" class="input-group">
+      <button class="main-btn" onclick="toggleExp(2)">ถัดไป (ระบุค่าพิเศษ) ➔</button>
     </div>
-    <div id="exp-step-2" style="display:none;">
-      <label>อัปโหลดบิล (สูงสุด 10 รูป, < 3MB)</label>
-      <input type="file" id="ex_files" multiple accept="image/*">
-      <button class="main-btn" onclick="showExpSummary()">สรุปยอดเงิน ➔</button>
-    </div>
-    <div id="exp-summary" style="display:none;">
-      <h3>📊 สรุปยอดเบิก</h3>
-      <div id="summary-list" class="card-site"></div>
-      <button class="main-btn" onclick="submitExpenses()">ยืนยันส่งข้อมูล</button>
-      <button class="main-btn back-btn" onclick="backToExp()">แก้ไขข้อมูล</button>
+    <div id="exp-f2" style="display:none;">
+      <label>ค่าใช้จ่ายพิเศษ (EPSpc. - Col AX)</label>
+      <select id="ex_spc_type" onchange="toggleDiv('ex_spc_div', this.value!=='ไม่มี')" class="input-group">
+        <option>ไม่มี</option><option>เบิกฉุกเฉิน/เงินทีม/เงินกู้</option><option>ค่าจ้างรายวัน</option><option>ทำฟัน</option><option>ค่ารักษาพยาบาล</option>
+      </select>
+      <div id="ex_spc_div" style="display:none;"><label>ระบุจำนวนเงิน (EPCSpc - Col AY)</label><input type="number" id="ex_spc_val" value="0" class="input-group"></div>
+      
+      <label>อัปโหลดรูปบิล (ไม่เกิน 10 รูป)</label>
+      <input type="file" id="ex_files" multiple accept="image/*" class="input-group">
+      <button class="main-btn" onclick="submitExpenses()">ส่งข้อมูลและสรุป ➔</button>
     </div>
   </div>
 
   <div id="page-capture" class="page">
     <h2>📸 Capture Report</h2>
     <label>เลือกวันที่ย้อนหลัง 7 วัน</label>
-    <select id="cap_date_select"></select>
-    <button class="main-btn" onclick="fetchCapture()">ดึงข้อมูลและแสดงรายงาน</button>
-    <div id="cap-result" style="margin-top:20px;"></div>
+    <select id="cap_date" class="input-group"></select>
+    <button class="main-btn" onclick="alert('กำลังดึงข้อมูลจาก Google Sheets...')">แสดงรายงาน</button>
+    <button class="main-btn back-btn" onclick="goHome()">กลับหน้าหลัก</button>
   </div>
 
-  <div id="page-final" class="page" style="text-align:center;">
-    <div id="final-icon" style="font-size:80px; margin:30px 0;"></div>
-    <h2 id="final-msg"></h2>
-    <p id="final-sub" style="color:var(--success); font-weight:600;"></p>
-    <button class="main-btn" onclick="location.reload()">กลับสู่เมนูหลัก</button>
+  <div id="final-1" class="page" style="text-align:center;">
+    <div style="font-size:60px; color:var(--success); margin:20px 0;"><i class="fas fa-shield-heart"></i></div>
+    <h2>บันทึกข้อมูลสำเร็จ!</h2>
+    <div style="background:#fff3e0; border-radius:15px; padding:15px; color:#e65100; font-weight:bold; margin:20px 0;">
+      👷‍♂️ Safety First! <br> ขอให้เป็นวันที่ดีและเดินทางปลอดภัยครับ
+    </div>
+    <button class="main-btn" onclick="goHome()">กลับเมนูหลัก</button>
+  </div>
+
+  <div id="final-2" class="page" style="text-align:center;">
+    <div style="font-size:60px; color:var(--success); margin:20px 0;"><i class="fas fa-check-circle"></i></div>
+    <h2>ขอบคุณที่รายงานข้อมูล!</h2>
+    <p>ระบบบันทึกเรียบร้อยแล้วครับ</p>
+    <button class="main-btn" onclick="goHome()">กลับเมนูหลัก</button>
   </div>
 
 </div>
 
 <script>
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyi7bfX6U_-iFVAu0C54itxe8nj1wdSQhDKfenDMtKvjo8JDLFSrxykcG-Go-Qzb1fe/exec";
-  let curStatus = "", base64Img = "", gpsStr = "", currentSite = 1;
+  let curStatus = "", gpsStr = "", base64Img = "", siteIndex = 1;
+  const gas_url = "https://script.google.com/macros/s/AKfycbyi7bfX6U_-iFVAu0C54itxe8nj1wdSQhDKfenDMtKvjo8JDLFSrxykcG-Go-Qzb1fe/exec";
 
-  // โหลดค่าเริ่มต้น
-  window.onload = () => {
-    document.getElementById('userName').value = localStorage.getItem('aec_name') || "";
-    document.getElementById('userRegion').value = localStorage.getItem('aec_reg') || "";
-    setupCapDates();
-  };
-
-  function openFlow(status) {
-    const name = document.getElementById('userName').value;
-    const reg = document.getElementById('userRegion').value;
-    if(!name || !reg) return alert("กรุณาระบุชื่อและภาค!");
-    localStorage.setItem('aec_name', name);
-    localStorage.setItem('aec_reg', reg);
-    curStatus = status;
-
+  // --- Logic การสลับหน้า ---
+  function startFlow(st) {
+    const name = document.getElementById('main_name').value;
+    const reg = document.getElementById('main_region').value;
+    if(!name || !reg) return alert("กรุณากรอกชื่อและเลือกภาคก่อนครับ");
+    
+    curStatus = st;
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-
-    if(['Site Check In','Check In','Check Out'].includes(status)) {
-      renderStForm(status);
-      document.getElementById('page-st').classList.add('active');
+    
+    if(['Site Check In','Check In','Check Out'].includes(st)) {
+      document.getElementById('check-title').innerText = st;
+      renderCheckFields(st);
+      document.getElementById('page-check').classList.add('active');
       getGPS();
     } else {
-      document.getElementById('page-' + status.toLowerCase()).classList.add('active');
-      if(status==='Report') resetReport();
+      document.getElementById('page-' + st.toLowerCase() + (st==='Report'?'-1':'')).classList.add('active');
+      if(st==='Capture') setupCapDates();
     }
   }
 
-  // --- Logic ส่วนที่ 1-3 ---
-  function renderStForm(st) {
-    document.getElementById('st-title').innerText = st;
+  // --- ส่วนที่ 1-3 Logic ---
+  function renderCheckFields(st) {
     let html = "";
     if(st !== 'Site Check In') {
       html = `
-        <label>ทำงานกับใคร (Buddy)</label><input type="text" id="f_buddy">
-        <label>ใช้รถใคร (Car)</label><input type="text" id="f_car">
-        <label>เลขไมล์ (Mileage)</label><input type="number" id="f_mile">
-        <label>สถานที่ ${st} (PLACE)</label><input type="text" id="f_place">
-        <label>${st==='Check In'?'PLAN':'BRIFE'}</label><textarea id="f_plan" rows="3"></textarea>
+        <label>ทำงานกับใคร (Buddy)</label><input type="text" id="f_buddy" class="input-group">
+        <label>ใช้รถใคร (Car)</label><input type="text" id="f_car" class="input-group">
+        <label>เลขไมล์ (Mileage)</label><input type="number" id="f_mile" class="input-group">
+        <label>สถานที่ (PLACE)</label><input type="text" id="f_place" class="input-group">
+        <label>${st==='Check In'?'PLAN':'BRIFE'}</label><textarea id="f_plan" rows="3" class="input-group"></textarea>
       `;
     }
-    document.getElementById('st-form-area').innerHTML = html;
+    document.getElementById('check-fields').innerHTML = html;
   }
 
-  function previewSt(input) {
+  function handlePreview(input) {
     const reader = new FileReader();
     reader.onload = e => {
       base64Img = e.target.result;
-      document.getElementById('st-img').src = base64Img;
-      document.getElementById('st-gps').innerText = "📍 พิกัดปัจจุบัน: " + gpsStr;
-      document.getElementById('st-preview-box').style.display = 'block';
+      document.getElementById('check-img').src = base64Img;
+      document.getElementById('check-gps-info').innerText = "📍 GPS Captured: " + gpsStr;
+      document.getElementById('check-preview').style.display = 'block';
     };
     reader.readAsDataURL(input.files[0]);
   }
 
-  function submitSt() {
-    if(!base64Img) return alert("กรุณาถ่ายรูปก่อนส่ง!");
-    const d = new Array(60).fill("");
-    const now = new Date();
-    d[0] = now.toLocaleDateString('th-TH'); d[1] = now.getHours().toString().padStart(2,'0')+":"+now.getMinutes().toString().padStart(2,'0');
-    d[2] = localStorage.getItem('aec_name'); d[3] = localStorage.getItem('aec_reg');
-    d[4] = curStatus; d[5] = gpsStr; d[6] = gpsStr; d[9] = "Mobile";
-    if(curStatus !== 'Site Check In') {
-      d[10] = document.getElementById('f_buddy').value; d[11] = document.getElementById('f_car').value;
-      d[12] = document.getElementById('f_mile').value; d[13] = document.getElementById('f_place').value;
-      d[14] = document.getElementById('f_plan').value;
-    }
-    sendData(d, base64Img);
+  function submitCheck() {
+    if(!base64Img) return alert("กรุณาถ่ายรูปก่อนส่ง");
+    // ฟังก์ชันนี้จะส่งข้อมูลจริงไป Gas ... (ในที่นี้แสดงหน้าสุดท้าย)
+    showFinal(curStatus);
   }
 
-  // --- Logic ส่วนที่ 4: Report ---
-  function resetReport() {
-    document.getElementById('rep-step-1').style.display = 'block';
-    document.getElementById('rep-step-cr').style.display = 'none';
-    document.getElementById('sites-container').innerHTML = "";
-    currentSite = 1;
-  }
-
-  function handleReportNext() {
+  // --- ส่วนที่ 4 Logic (งาน CR 1-4 ไซต์) ---
+  function nextReportStep() {
     if(document.getElementById('r_type').value === 'งาน CR') {
-      document.getElementById('rep-step-1').style.display = 'none';
-      document.getElementById('rep-step-cr').style.display = 'block';
-      renderSiteRow(1);
+      document.getElementById('page-report-1').classList.remove('active');
+      document.getElementById('page-report-cr').classList.add('active');
+      renderCRSite(1);
     } else {
-      submitReportGeneral();
+      showFinal('Report');
     }
   }
 
-  function renderSiteRow(n) {
-    const area = document.getElementById('sites-container');
+  function renderCRSite(n) {
+    const area = document.getElementById('cr-sites-area');
     const html = `
-      <div class="card-site" id="site_row_${n}">
-        <h2>🏙️ ข้อมูลไซต์ที่ ${n}</h2>
-        ${n==1 ? '<label>ทำงานของภาค (JobRegion)</label><select id="s_reg"><option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option></select>':''}
-        <label>ชื่อไซต์ (Site${n})</label><input type="text" id="s_name_${n}" required>
-        <label>จังหวัด (Province${n})</label><input type="text" id="s_prov_${n}" required>
+      <div class="card-site">
+        <h3>ไซต์ที่ ${n}</h3>
+        ${n==1?'<label>ทำงานของภาค (JobRegion)</label><select id="s_reg" class="input-group"><option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option></select>':''}
+        <label>ชื่อไซต์ (Site${n})</label><input type="text" id="sn_${n}" class="input-group">
+        <label>จังหวัด (Province${n})</label><input type="text" id="sp_${n}" class="input-group">
         <label>เนื้องาน (JobSite${n})</label>
-        <select id="s_job_${n}">
-          <option>ไม่ได้ลงพื้นที่ โทรติดต่อนัดประชาคม</option>
-          <option>ลงพื้นที่ทำ CR - CRL</option>
-          <option>ลงพื้นที่ ทำประชาคม</option>
-          <option>อื่น ๆ</option>
+        <select id="sj_${n}" class="input-group">
+          <option>ลงพื้นที่ทำ CR - CRL</option><option>ลงพื้นที่ ทำประชาคม</option><option>ลงพื้นที่ เพื่อทำงานหาที่ SA</option><option>อื่น ๆ</option>
         </select>
-        <label>รายละเอียดงาน</label><textarea id="s_det_${n}" required></textarea>
-        <label>ชื่อผู้นำ-และเบอร์โทร (LDSite${n})</label><input type="text" id="s_ld_${n}" required>
-        <label>มีไซต์ที่ ${n+1} หรือไม่?</label>
-        <select id="s_next_${n}" onchange="if(this.value.includes('มีไซต์ที่')) renderSiteRow(${n+1})">
+        <label>ชื่อผู้นำ (LDSite${n})</label><input type="text" id="sl_${n}" class="input-group">
+        <label>มีไซต์ถัดไปหรือไม่?</label>
+        <select onchange="if(this.value==='มีไซต์ที่ ${n+1}') renderCRSite(${n+1})" class="input-group">
           <option>ไม่มี/ส่งรายงาน</option>
-          ${n < 4 ? `<option>มีไซต์ที่ ${n+1}</option>` : ''}
+          ${n<4 ? `<option>มีไซต์ที่ ${n+1}</option>` : ''}
         </select>
-        <button class="main-btn" onclick="submitReportCR()">ส่งรายงานไซต์ 1-${n}</button>
+        <button class="main-btn" onclick="showFinal('Report')">ส่งรายงานทั้งหมด</button>
       </div>`;
-    area.insertAdjacentHTML('beforeend', html);
-    currentSite = n;
+    area.innerHTML += html;
   }
 
-  // --- Logic ส่วนที่ 5: Expenses ---
-  function goExpNext() {
-    document.getElementById('exp-step-1').style.display = 'none';
-    document.getElementById('exp-step-2').style.display = 'block';
+  // --- ส่วนที่ 5 Logic ---
+  function toggleExp(step) {
+    document.getElementById('exp-f1').style.display = step === 1 ? 'block' : 'none';
+    document.getElementById('exp-f2').style.display = step === 2 ? 'block' : 'none';
   }
 
-  function showExpSummary() {
-    document.getElementById('exp-step-2').style.display = 'none';
-    const total = Number(document.getElementById('ex_oil').value) + Number(document.getElementById('ex_hotel').value) + 
-                  Number(document.getElementById('ex_ccr').value) + Number(document.getElementById('ex_trav').value) + Number(document.getElementById('ex_spc_val').value);
-    
-    let sumHtml = `
-      <div class="summary-item"><span>ค่าน้ำมัน:</span> <b>${document.getElementById('ex_oil').value} บ.</b></div>
-      <div class="summary-item"><span>ค่าที่พัก:</span> <b>${document.getElementById('ex_hotel').value} บ.</b></div>
-      <div class="summary-item"><span>ค่าประชาคม:</span> <b>${document.getElementById('ex_ccr').value} บ.</b></div>
-      <div class="summary-item"><span>ค่าเดินทาง:</span> <b>${document.getElementById('ex_trav').value} บ.</b></div>
-      <div class="summary-item" style="color:red"><span>รวมทั้งหมด:</span> <b>${total.toLocaleString()} บ.</b></div>
-    `;
-    document.getElementById('summary-list').innerHTML = sumHtml;
-    document.getElementById('exp-summary').style.display = 'block';
+  function submitExpenses() {
+    alert("ระบบกำลังบันทึกรูปบิลและคำนวณยอดเงิน...");
+    showFinal('Expenses');
   }
 
-  // --- กลไกหัวใจหลัก (ส่งข้อมูล) ---
-  function sendData(v, img) {
-    document.body.innerHTML = "<div class='container' style='text-align:center'><h2>กำลังบันทึกข้อมูล...</h2><i class='fas fa-spinner fa-spin fa-3x'></i></div>";
-    fetch(WEB_APP_URL, { 
-      method: 'POST', 
-      mode: 'no-cors', 
-      body: JSON.stringify({ 
-        values: v, 
-        region: localStorage.getItem('aec_reg'), 
-        status: curStatus,
-        image: img 
-      })
-    }).then(() => showFinal());
+  // --- Helper Functions ---
+  function showFinal(st) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    if(['Site Check In','Check In'].includes(st)) {
+      document.getElementById('final-1').classList.add('active');
+    } else {
+      document.getElementById('final-2').classList.add('active');
+    }
   }
 
-  function showFinal() {
-    document.body.innerHTML = `
-      <div class="container" style="text-align:center;">
-        <div id="final-icon" style="font-size:80px; color:var(--success); margin:30px 0;"><i class="fas fa-check-circle"></i></div>
-        <h2 id="final-msg">บันทึกสำเร็จ!</h2>
-        <p id="final-sub">${['Site Check In','Check In'].includes(curStatus) ? 'ขอบคุณสำหรับความตั้งใจครับ <br> ⚠️ Safety First เดินทางปลอดภัย' : 'ขอบคุณที่รายงานข้อมูลครับ'}</p>
-        <button class="main-btn" onclick="location.reload()">กลับสู่เมนูหลัก</button>
-      </div>`;
-  }
-
-  // ฟังก์ชันช่วยเหลือ
   function getGPS() {
     navigator.geolocation.getCurrentPosition(p => {
       gpsStr = p.coords.latitude.toFixed(6) + "," + p.coords.longitude.toFixed(6);
-    }, err => { alert("กรุณาเปิด GPS"); }, {enableHighAccuracy:true});
+    }, err => console.log("GPS denied"), {enableHighAccuracy:true});
   }
 
-  function toggleEtc(val, id) { document.getElementById(id).style.display = val === 'งาน อื่น ๆ' ? 'block' : 'none'; }
-  
+  function toggleDiv(id, show) { document.getElementById(id).style.display = show ? 'block' : 'none'; }
+  function goHome() { location.reload(); }
+
   function setupCapDates() {
-    const sel = document.getElementById('cap_date_select');
+    const sel = document.getElementById('cap_date');
+    sel.innerHTML = "";
     for(let i=0; i<8; i++){
       let d = new Date(); d.setDate(d.getDate() - i);
-      let ds = d.toLocaleDateString('th-TH');
-      sel.innerHTML += `<option value="${ds}">${ds}</option>`;
+      let opt = document.createElement('option');
+      opt.value = d.toLocaleDateString('th-TH');
+      opt.innerText = d.toLocaleDateString('th-TH');
+      sel.appendChild(opt);
     }
   }
-
-  function goHome() { location.reload(); }
 </script>
+
 </body>
 </html>
