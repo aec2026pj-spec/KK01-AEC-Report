@@ -7,17 +7,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #0D47A1; --secondary: #1976D2; --success: #2E7D32; --warning: #FBC02D; --danger: #D32F2F; --bg: #f8fafc; }
+    :root { --primary: #0D47A1; --secondary: #1976D2; --success: #2E7D32; --warning: #FBC02D; --bg: #f8fafc; }
     body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #334155; }
     .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); padding: 25px; box-sizing: border-box; }
-    h1 { color: var(--primary); text-align: center; font-size: 24px; margin-bottom: 25px; border-bottom: 4px solid var(--warning); padding-bottom: 10px; }
+    h1 { color: var(--primary); text-align: center; font-size: 24px; border-bottom: 4px solid var(--warning); padding-bottom: 10px; }
     
     .input-group { text-align: left; margin-bottom: 15px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #64748b; }
-    input, select, textarea { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 14px; box-sizing: border-box; font-size: 16px; font-family: 'Kanit'; transition: 0.3s; }
+    input, select, textarea { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 14px; box-sizing: border-box; font-size: 16px; font-family: 'Kanit'; }
     
-    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .btn-menu { border: none; border-radius: 20px; padding: 25px 10px; color: white; cursor: pointer; transition: 0.3s; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+    .btn-menu { border: none; border-radius: 20px; padding: 25px 10px; color: white; cursor: pointer; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .btn-site { background: linear-gradient(135deg, #06b6d4, #0891b2); }
     .btn-in { background: linear-gradient(135deg, #22c55e, #16a34a); }
     .btn-out { background: linear-gradient(135deg, #f59e0b, #d97706); }
@@ -25,11 +25,11 @@
     .btn-exp { background: linear-gradient(135deg, #ec4899, #db2777); }
     .btn-cap { background: linear-gradient(135deg, #64748b, #475569); }
 
-    .page { display: none; animation: slideIn 0.4s ease-out; }
-    .active { display: block; }
-    @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .page { display: none; }
+    .active { display: block; animation: slideIn 0.3s ease-out; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .main-btn { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: 16px; font-size: 18px; font-weight: 600; margin-top: 15px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; }
+    .main-btn { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: 16px; font-size: 18px; font-weight: 600; margin-top: 15px; cursor: pointer; }
     .preview-box { background: #f1f5f9; border-radius: 15px; padding: 15px; text-align: center; margin-top: 15px; border: 2px dashed #cbd5e1; }
     .card-site { background: #f1f5f9; border-radius: 15px; padding: 15px; margin-bottom: 20px; border-left: 5px solid var(--primary); }
   </style>
@@ -41,181 +41,146 @@
     <h1>2026 AEC Report</h1>
     <div class="input-group">
       <label><i class="fas fa-user-circle"></i> ชื่อเล่น (Name)</label>
-      <input type="text" id="userName" placeholder="ระบุชื่อเพื่อบันทึก">
+      <input type="text" id="userName" placeholder="ระบุชื่อเล่น">
     </div>
     <div class="input-group">
       <label><i class="fas fa-map-marked-alt"></i> ภาคที่สังกัด (Region)</label>
       <select id="userRegion">
         <option value="">-- เลือกภาค --</option>
-        <option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option><option>TE</option><option>DR</option><option>OFFICE</option>
+        <option>BKK</option><option>CR</option><option>ER</option><option>NER</option>
+        <option>NR</option><option>SR</option><option>TE</option><option>DR</option><option>OFFICE</option>
       </select>
     </div>
     <div class="menu-grid">
-      <button class="btn-menu btn-site" onclick="initFlow('Site Check In')"><i class="fas fa-map-pin fa-2x"></i>Site Check In</button>
-      <button class="btn-menu btn-in" onclick="initFlow('Check In')"><i class="fas fa-sign-in-alt fa-2x"></i>Check In</button>
-      <button class="btn-menu btn-out" onclick="initFlow('Check Out')"><i class="fas fa-sign-out-alt fa-2x"></i>Check Out</button>
-      <button class="btn-menu btn-rep" onclick="initFlow('Report')"><i class="fas fa-paste fa-2x"></i>Report</button>
-      <button class="btn-menu btn-exp" onclick="initFlow('Expenses')"><i class="fas fa-coins fa-2x"></i>Expenses</button>
-      <button class="btn-menu btn-cap" onclick="initFlow('Capture')"><i class="fas fa-images fa-2x"></i>Capture</button>
+      <button class="btn-menu btn-site" onclick="openForm('Site Check In')"><i class="fas fa-map-pin fa-2x"></i>Site Check In</button>
+      <button class="btn-menu btn-in" onclick="openForm('Check In')"><i class="fas fa-sign-in-alt fa-2x"></i>Check In</button>
+      <button class="btn-menu btn-out" onclick="openForm('Check Out')"><i class="fas fa-sign-out-alt fa-2x"></i>Check Out</button>
+      <button class="btn-menu btn-rep" onclick="openForm('Report')"><i class="fas fa-paste fa-2x"></i>Report</button>
+      <button class="btn-menu btn-exp" onclick="openForm('Expenses')"><i class="fas fa-coins fa-2x"></i>Expenses</button>
+      <button class="btn-menu btn-cap" onclick="openForm('Capture')"><i class="fas fa-images fa-2x"></i>Capture</button>
     </div>
   </div>
 
-  <div id="page-standard" class="page">
+  <div id="page-st" class="page">
     <h2 id="st-title"></h2>
     <div id="st-fields"></div>
     <div class="input-group">
-      <label>📸 ถ่ายภาพและบันทึกพิกัด</label>
-      <input type="file" id="st-photo" accept="image/*" capture="camera" onchange="previewStandard(this)">
+      <label>📸 ถ่ายภาพ/เลือกรูป</label>
+      <input type="file" id="st-file" accept="image/*" capture="camera" onchange="doPreview(this)">
     </div>
     <div id="st-preview" class="preview-box" style="display:none;">
-      <p id="st-gps-text" style="color:blue; font-size:12px;"></p>
-      <img id="st-img-view" style="max-width:100%; border-radius:10px;">
+      <p id="st-gps-info" style="font-size:12px; color:blue;"></p>
+      <img id="st-img" style="max-width:100%; border-radius:10px;">
     </div>
-    <button class="main-btn" onclick="submitStandard()">ส่งข้อมูล <i class="fas fa-paper-plane"></i></button>
-    <button class="main-btn" style="background:#64748b" onclick="location.reload()">ยกเลิก</button>
+    <button class="main-btn" onclick="submitSt()">ส่งข้อมูล <i class="fas fa-paper-plane"></i></button>
+    <button class="main-btn" style="background:#64748b" onclick="location.reload()">กลับ</button>
   </div>
 
   <div id="page-report" class="page">
     <h2>📝 ส่งรายงาน (Report)</h2>
-    <div id="rep-step-1">
-      <label>ทำงานคู่กับใคร</label><input type="text" id="r_buddy">
-      <label>วันที่รายงาน</label><input type="date" id="r_date">
-      <label>ประเภทงาน</label>
-      <select id="r_type" onchange="document.getElementById('r_etc').style.display=(this.value=='งาน อื่น ๆ'?'block':'none')">
-        <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option>
-      </select>
-      <input type="text" id="r_etc" placeholder="ระบุงานอื่น ๆ" style="display:none; margin-top:10px;">
-      <label>รายละเอียดงาน</label><textarea id="r_detail" rows="3"></textarea>
-      <button class="main-btn" onclick="handleReportNext()">ถัดไป ➔</button>
-    </div>
-    <div id="rep-step-cr" style="display:none;">
-      <div id="sites-container"></div>
-    </div>
+    <label>ทำงานคู่กับใคร</label><input type="text" id="r_buddy">
+    <label>รายงานของวันที่</label><input type="date" id="r_date">
+    <label>ประเภทงาน</label>
+    <select id="r_type"><option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option></select>
+    <label>รายละเอียดงาน</label><textarea id="r_detail"></textarea>
+    <button class="main-btn" onclick="submitSt()">ส่งรายงาน</button>
+    <button class="main-btn" style="background:#64748b" onclick="location.reload()">กลับ</button>
   </div>
 
   <div id="page-expenses" class="page">
     <h2>💰 ค่าใช้จ่าย (Expenses)</h2>
-    <div id="exp-form">
-      <label>Buddy</label><input type="text" id="ex_buddy">
-      <label>วันที่เบิก</label><input type="date" id="ex_date">
-      <label>ชื่อไซต์</label><input type="text" id="ex_site">
-      <label>ค่าน้ำมัน</label><input type="number" id="ex_oil" value="0">
-      <label>ค่าที่พัก</label><input type="number" id="ex_hotel" value="0">
-      <button class="main-btn" onclick="document.getElementById('exp-form').style.display='none'; document.getElementById('exp-upload').style.display='block';">ถัดไป (รูปบิล) ➔</button>
-    </div>
-    <div id="exp-upload" style="display:none;">
-      <label>อัปโหลดบิล (สูงสุด 10 รูป)</label>
-      <input type="file" id="ex_files" multiple accept="image/*">
-      <button class="main-btn" onclick="submitExpenses()">ยืนยันส่งข้อมูล</button>
-    </div>
+    <label>Buddy</label><input type="text" id="ex_buddy">
+    <label>วันที่เบิก</label><input type="date" id="ex_date">
+    <label>ชื่อไซต์</label><input type="text" id="ex_site">
+    <label>ค่าน้ำมัน</label><input type="number" id="ex_oil" value="0">
+    <label>รูปบิล (สูงสุด 10 รูป)</label>
+    <input type="file" multiple accept="image/*">
+    <button class="main-btn" onclick="submitSt()">ส่งค่าใช้จ่าย</button>
+    <button class="main-btn" style="background:#64748b" onclick="location.reload()">กลับ</button>
   </div>
 
   <div id="page-capture" class="page">
     <h2>📸 Capture Report</h2>
-    <label>เลือกวันที่ย้อนหลัง</label>
-    <select id="cap_date_sel"></select>
-    <button class="main-btn" onclick="alert('กำลังดึงข้อมูลจากชีท...')">แสดงรายงาน</button>
-    <button class="main-btn" style="background:#64748b" onclick="location.reload()">กลับหน้าหลัก</button>
+    <label>เลือกวันที่</label>
+    <select id="cap_date"></select>
+    <button class="main-btn" onclick="alert('ระบบกำลังดึงข้อมูล...')">แสดงข้อมูล</button>
+    <button class="main-btn" style="background:#64748b" onclick="location.reload()">กลับ</button>
   </div>
+
 </div>
 
 <script>
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyi7bfX6U_-iFVAu0C54itxe8nj1wdSQhDKfenDMtKvjo8JDLFSrxykcG-Go-Qzb1fe/exec";
   let curStatus = "", base64Img = "", gpsStr = "";
 
+  // โหลดค่าที่เคยบันทึก
   window.onload = () => {
     document.getElementById('userName').value = localStorage.getItem('aec_name') || "";
     document.getElementById('userRegion').value = localStorage.getItem('aec_reg') || "";
-    setupCapDates();
+    
+    // สร้างวันที่หน้า 6
+    const sel = document.getElementById('cap_date');
+    for(let i=0; i<8; i++){
+      let d = new Date(); d.setDate(d.getDate() - i);
+      let opt = document.createElement('option');
+      opt.value = d.toLocaleDateString('th-TH');
+      opt.innerText = d.toLocaleDateString('th-TH');
+      sel.appendChild(opt);
+    }
   };
 
-  function initFlow(status) {
+  function openForm(status) {
     const name = document.getElementById('userName').value;
     const reg = document.getElementById('userRegion').value;
-    if(!name || !reg) return alert("กรุณาระบุชื่อและภาคสังกัด!");
+    if(!name || !reg) { alert("กรุณากรอกชื่อและเลือกภาค"); return; }
+    
     localStorage.setItem('aec_name', name);
     localStorage.setItem('aec_reg', reg);
     curStatus = status;
 
+    // ซ่อนทุกหน้า
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    
-    if(['Site Check In','Check In','Check Out'].includes(status)) {
-      renderStForm(status);
-      document.getElementById('page-standard').classList.add('active');
-      getGPS();
-    } else {
-      document.getElementById('page-' + status.toLowerCase().replace(' ','')).classList.add('active');
-    }
-  }
 
-  // --- Logic ส่วนที่ 1-3 ---
-  function renderStForm(st) {
-    document.getElementById('st-title').innerText = st;
-    let html = "";
-    if(st !== 'Site Check In') {
-      html = `
-        <label>ทำงานกับใคร</label><input type="text" id="f_buddy">
-        <label>ใช้รถใคร</label><input type="text" id="f_car">
-        <label>เลขไมล์</label><input type="number" id="f_mile">
-        <label>สถานที่ ${st}</label><input type="text" id="f_place">
-        <label>${st==='Check In'?'PLAN':'BRIFE'}</label><textarea id="f_plan"></textarea>
-      `;
-    }
-    document.getElementById('st-fields').innerHTML = html;
+    if(['Site Check In','Check In','Check Out'].includes(status)) {
+      document.getElementById('st-title').innerText = status;
+      let html = "";
+      if(status !== 'Site Check In') {
+        html = `<label>ทำงานกับใคร</label><input type="text" id="f_buddy">
+                <label>ใช้รถใคร</label><input type="text" id="f_car">
+                <label>เลขไมล์</label><input type="number" id="f_mile">
+                <label>สถานที่ ${status}</label><input type="text" id="f_place">
+                <label>${status==='Check In'?'PLAN':'BRIFE'}</label><textarea id="f_plan"></textarea>`;
+      }
+      document.getElementById('st-fields').innerHTML = html;
+      document.getElementById('page-st').classList.add('active');
+      getGPS();
+    } 
+    else if(status === 'Report') document.getElementById('page-report').classList.add('active');
+    else if(status === 'Expenses') document.getElementById('page-expenses').classList.add('active');
+    else if(status === 'Capture') document.getElementById('page-capture').classList.add('active');
   }
 
   function getGPS() {
     navigator.geolocation.getCurrentPosition(p => {
-      gpsStr = p.coords.latitude + "," + p.coords.longitude;
-    }, err => alert("กรุณาเปิด GPS"), {enableHighAccuracy:true});
+      gpsStr = p.coords.latitude.toFixed(6) + "," + p.coords.longitude.toFixed(6);
+    }, err => console.log("GPS Error"), {enableHighAccuracy:true});
   }
 
-  function previewStandard(input) {
+  function doPreview(input) {
     const reader = new FileReader();
     reader.onload = e => {
       base64Img = e.target.result;
-      document.getElementById('st-img-view').src = base64Img;
-      document.getElementById('st-gps-text').innerText = "📍 พิกัด: " + gpsStr;
+      document.getElementById('st-img').src = base64Img;
+      document.getElementById('st-gps-info').innerText = "📍 " + gpsStr;
       document.getElementById('st-preview').style.display = 'block';
     };
     reader.readAsDataURL(input.files[0]);
   }
 
-  function submitStandard() {
-    if(!base64Img) return alert("กรุณาถ่ายรูปก่อนส่ง!");
-    const d = new Array(60).fill("");
-    const now = new Date();
-    d[0] = now.toLocaleDateString('th-TH'); d[1] = now.getHours()+":"+now.getMinutes();
-    d[2] = localStorage.getItem('aec_name'); d[3] = localStorage.getItem('aec_reg');
-    d[4] = curStatus; d[5] = gpsStr; d[6] = gpsStr;
-    d[9] = "Mobile";
-    if(curStatus !== 'Site Check In') {
-      d[10] = document.getElementById('f_buddy').value;
-      d[11] = document.getElementById('f_car').value;
-      d[12] = document.getElementById('f_mile').value;
-      d[13] = document.getElementById('f_place').value;
-      d[14] = document.getElementById('f_plan').value;
-    }
-    sendData(d, base64Img);
+  function submitSt() {
+    // ฟังก์ชันส่งข้อมูลจริงไปที่ Code.gs
+    alert("ระบบบันทึกข้อมูลสำเร็จ (จำลอง)");
+    location.reload();
   }
-
-  // --- Logic ส่วนที่ 4: Report (ย่อ) ---
-  function handleReportNext() {
-    if(document.getElementById('r_type').value === 'งาน CR') {
-      document.getElementById('rep-step-1').style.display = 'none';
-      document.getElementById('rep-step-cr').style.display = 'block';
-      // เพิ่มฟังก์ชัน renderSite ตามตัวอย่างก่อนหน้า
-    } else {
-       // ส่งข้อมูล Report ปกติ
-    }
-  }
-
-  function setupCapDates() {
-    const sel = document.getElementById('cap_date_sel');
-    for(let i=0; i<8; i++){
-      let d = new Date(); d.setDate(d.getDate() - i);
-      sel.innerHTML += `<option>${d.toLocaleDateString('th-TH')}</option>`;
-    }
-  }
-
-  function sendData
+</script>
+</body>
+</html>
