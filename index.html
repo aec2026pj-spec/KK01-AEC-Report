@@ -7,30 +7,27 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #0D47A1; --secondary: #1976D2; --success: #2E7D32; --warning: #FBC02D; --danger: #D32F2F; --bg: #f4f7f6; }
-    body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #333; }
-    .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 20px; box-sizing: border-box; min-height: 95vh; }
-    h1 { color: var(--primary); text-align: center; font-size: 24px; border-bottom: 4px solid var(--warning); padding-bottom: 10px; margin-bottom: 20px; }
-    h2 { font-size: 18px; color: var(--secondary); margin-bottom: 15px; border-left: 5px solid var(--warning); padding-left: 10px; }
-    .page { display: none; animation: fadeIn 0.4s ease; }
-    .page.active { display: block !important; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    :root { --primary: #0D47A1; --secondary: #1976D2; --success: #2E7D32; --warning: #FBC02D; --danger: #D32F2F; --bg: #f0f2f5; }
+    body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 10px; }
+    .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 20px; box-sizing: border-box; min-height: 95vh; }
+    h1 { color: var(--primary); text-align: center; font-size: 24px; border-bottom: 3px solid var(--warning); padding-bottom: 10px; }
+    h2 { font-size: 18px; color: var(--secondary); border-left: 5px solid var(--warning); padding-left: 10px; margin-top: 20px; }
+    .page { display: none; } .page.active { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .input-group { margin-bottom: 15px; }
-    label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; color: #555; }
-    input, select, textarea { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px; box-sizing: border-box; font-family: 'Kanit'; font-size: 15px; }
-    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
-    .btn-menu { border: none; border-radius: 20px; padding: 22px 10px; color: white; cursor: pointer; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 14px; transition: 0.2s; }
-    .btn-site { background: linear-gradient(135deg, #06b6d4, #0891b2); }
-    .btn-in { background: linear-gradient(135deg, #22c55e, #16a34a); }
-    .btn-out { background: linear-gradient(135deg, #f59e0b, #d97706); }
-    .btn-rep { background: linear-gradient(135deg, #a855f7, #9333ea); }
-    .btn-exp { background: linear-gradient(135deg, #ec4899, #db2777); }
-    .btn-cap { background: linear-gradient(135deg, #64748b, #475569); }
-    .main-btn { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: 15px; font-size: 18px; font-weight: 600; margin-top: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; }
-    .back-btn { background: #64748b; margin-top: 10px; }
-    .card-site { background: #f8fafc; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
-    .preview-box { text-align: center; margin: 15px 0; display: none; }
-    .preview-img { max-width: 100%; border-radius: 15px; border: 3px solid #ddd; }
+    label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; color: #444; }
+    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 15px; font-family: 'Kanit'; }
+    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+    .btn-menu { border: none; border-radius: 15px; padding: 20px 10px; color: white; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: 0.2s; }
+    .btn-menu i { font-size: 24px; }
+    .btn-site { background: #0097A7; } .btn-in { background: #43A047; } .btn-out { background: #FB8C00; }
+    .btn-rep { background: #7B1FA2; } .btn-exp { background: #C2185B; } .btn-cap { background: #455A64; }
+    .main-btn { background: var(--primary); color: white; width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; margin-top: 15px; cursor: pointer; }
+    .back-btn { background: #777; margin-top: 10px; }
+    .card { background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; margin-bottom: 10px; }
+    #preview-box { text-align: center; display: none; margin-top: 10px; }
+    #preview-img { max-width: 100%; border-radius: 10px; border: 2px solid #ddd; }
+    .loading { display: none; text-align: center; padding: 20px; }
   </style>
 </head>
 <body>
@@ -39,193 +36,424 @@
   <div id="page-home" class="page active">
     <h1>2026 AEC Report</h1>
     <div class="input-group">
-      <label>ชื่อเล่น (Name) - Col C</label>
+      <label>ชื่อเล่น (Name)</label>
       <input type="text" id="main_name" placeholder="ระบุชื่อเล่น">
     </div>
     <div class="input-group">
-      <label>ภาคที่สังกัด (Region) - Col D</label>
+      <label>ภาคที่สังกัด (Region)</label>
       <select id="main_region">
         <option value="">-- เลือกภาค --</option>
         <option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option><option>TE</option><option>DR</option><option>OFFICE</option>
       </select>
     </div>
     <div class="menu-grid">
-      <button class="btn-menu btn-site" onclick="startFlow('Site Check In')"><i class="fas fa-map-pin fa-2x"></i>Site Check In</button>
-      <button class="btn-menu btn-in" onclick="startFlow('Check In')"><i class="fas fa-sign-in-alt fa-2x"></i>Check In</button>
-      <button class="btn-menu btn-out" onclick="startFlow('Check Out')"><i class="fas fa-sign-out-alt fa-2x"></i>Check Out</button>
-      <button class="btn-menu btn-rep" onclick="startFlow('Report')"><i class="fas fa-file-contract fa-2x"></i>Report</button>
-      <button class="btn-menu btn-exp" onclick="startFlow('Expenses')"><i class="fas fa-wallet fa-2x"></i>Expenses</button>
-      <button class="btn-menu btn-cap" onclick="startFlow('Capture')"><i class="fas fa-camera fa-2x"></i>Capture</button>
+      <button class="btn-menu btn-site" onclick="openFlow('Site Check In')"><i class="fas fa-map-marker-alt"></i>Site Check In</button>
+      <button class="btn-menu btn-in" onclick="openFlow('Check In')"><i class="fas fa-sign-in-alt"></i>Check In</button>
+      <button class="btn-menu btn-out" onclick="openFlow('Check Out')"><i class="fas fa-sign-out-alt"></i>Check Out</button>
+      <button class="btn-menu btn-rep" onclick="openFlow('Report')"><i class="fas fa-file-alt"></i>Report</button>
+      <button class="btn-menu btn-exp" onclick="openFlow('Expenses')"><i class="fas fa-wallet"></i>Expenses</button>
+      <button class="btn-menu btn-cap" onclick="openFlow('Capture')"><i class="fas fa-camera"></i>Capture</button>
     </div>
   </div>
 
   <div id="page-check" class="page">
     <h2 id="check-title"></h2>
-    <div id="check-fields"></div>
-    <div class="input-group"><label>📸 รูปภาพ (Col I)</label><input type="file" id="check-file" accept="image/*" capture="camera" onchange="handlePreview(this)"></div>
-    <div id="check-preview" class="preview-box"><p id="check-gps-info" style="font-size:12px; color:blue;"></p><img id="check-img" class="preview-img"></div>
-    <button class="main-btn" onclick="submitCheck()">ส่งข้อมูล</button>
+    <div id="check-dynamic-fields"></div>
+    <div class="input-group">
+      <label>ถ่ายภาพ/เลือกรูป</label>
+      <input type="file" id="check-file" accept="image/*" capture="camera" onchange="previewImage(this)">
+    </div>
+    <div id="preview-box">
+      <p id="gps-display" style="font-size:12px; color:blue;"></p>
+      <img id="preview-img" src="">
+    </div>
+    <button class="main-btn" onclick="submitCheckData()">ส่งข้อมูล</button>
+    <button class="main-btn back-btn" onclick="goHome()">กลับเมนูหลัก</button>
+  </div>
+
+  <div id="page-report" class="page">
+    <h2>📝 บันทึกรายงาน (Report)</h2>
+    <div class="card">
+      <label>ทำงานคู่กับใคร (Buddy)</label><input type="text" id="r_buddy" class="input-group">
+      <label>รายงานผลงานวันที่</label><input type="date" id="r_date" class="input-group">
+      <label>ประเภทงาน</label>
+      <select id="r_jobtype" onchange="toggleDiv('r_etc_div', this.value==='งาน อื่น ๆ')">
+        <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option>
+      </select>
+      <div id="r_etc_div" style="display:none; margin-top:10px;"><label>ระบุชนิดงาน</label><input type="text" id="r_etc"></div>
+      <label style="margin-top:10px;">รายละเอียดงาน</label><textarea id="r_detail" rows="3"></textarea>
+    </div>
+    <button class="main-btn" onclick="nextReportStep()">ถัดไป ➔</button>
     <button class="main-btn back-btn" onclick="goHome()">กลับ</button>
   </div>
 
-  <div id="page-report-1" class="page">
-    <h2>📝 รายงาน (Report)</h2>
-    <label>Buddy (Col K)</label><input type="text" id="r_buddy" class="input-group">
-    <label>วันที่ทำงาน (Col A)</label><input type="date" id="r_date" class="input-group">
-    <label>ประเภทงาน (Col P)</label>
-    <select id="r_type" onchange="toggleDiv('r_etc_div', this.value==='งาน อื่น ๆ')" class="input-group">
-      <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option>
-    </select>
-    <div id="r_etc_div" style="display:none;"><label>ระบุชนิดงาน (Col Q)</label><input type="text" id="r_etc" class="input-group"></div>
-    <label>รายละเอียดงาน (Col R)</label><textarea id="r_detail" rows="3" class="input-group"></textarea>
-    <button class="main-btn" onclick="nextReportStep()">ขั้นตอนถัดไป ➔</button>
+  <div id="page-report-cr" class="page">
+    <h2>🏢 รายละเอียดงาน CR (ไซต์ 1-4)</h2>
+    <div id="cr-container"></div>
   </div>
-  <div id="page-report-cr" class="page"><h2>🏢 รายละเอียดงาน CR</h2><div id="cr-sites-area"></div></div>
 
   <div id="page-expenses" class="page">
-    <h2>💰 บันทึกค่าใช้จ่าย (Expenses)</h2>
+    <h2>💰 ค่าใช้จ่าย (Expenses)</h2>
     <div id="exp-step-1">
-      <div class="card-site">
-        <label>ทำงานคู่กับใคร (Buddy) - Col K</label><input type="text" id="ex_buddy" class="input-group">
-        <label>ตั้งเบิกของวันที่ - Col A</label><input type="date" id="ex_date" class="input-group">
-        <label>ประเภทงาน - Col P</label>
-        <select id="ex_jobtype" onchange="toggleDiv('ex_etc_div_e', this.value==='งาน อื่น ๆ')" class="input-group">
+      <div class="card">
+        <label>ทำงานคู่กับใคร (Buddy)</label><input type="text" id="ex_buddy" class="input-group">
+        <label>ตั้งเบิกวันที่</label><input type="date" id="ex_date" class="input-group">
+        <label>ประเภทงาน</label>
+        <select id="ex_jobtype" onchange="toggleDiv('ex_etc_div_e', this.value==='งาน อื่น ๆ')">
           <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option><option>งาน อื่น ๆ</option>
         </select>
-        <div id="ex_etc_div_e" style="display:none;"><label>ระบุชนิดงาน (Col Q)</label><input type="text" id="ex_etc_e" class="input-group"></div>
-        <label>รายละเอียดงาน - Col R</label><textarea id="ex_jobdetail" rows="2" class="input-group"></textarea>
+        <div id="ex_etc_div_e" style="display:none; margin-top:10px;"><label>ระบุชนิดงาน</label><input type="text" id="ex_etc"></div>
+        <label style="margin-top:10px;">รายละเอียดงาน</label><textarea id="ex_detail" rows="2"></textarea>
       </div>
-      <button class="main-btn" onclick="toggleExpStep(2)">ต่อไป ➔</button>
+      <button class="main-btn" onclick="toggleExpStep(2)">ถัดไป ➔</button>
     </div>
+    
     <div id="exp-step-2" style="display:none;">
-      <div class="card-site">
-        <label>ชื่อไซต์ (Col AR)</label><input type="text" id="ex_epsite" class="input-group">
-        <label>จังหวัด (Col AS)</label><input type="text" id="ex_eppv" class="input-group">
-        <label>No.1 ค่าน้ำมัน (Col AT)</label><input type="number" id="ex_epoil" value="0" class="input-group">
-        <label>No.2 ค่าที่พัก (Col AU)</label><input type="number" id="ex_ephotel" value="0" class="input-group">
-        <label>No.3 ค่าของประชาคม (Col AV)</label><input type="number" id="ex_epccr" value="0" class="input-group">
-        <label>No.4 ค่าเดินทาง (Col AW)</label><input type="number" id="ex_eptrav" value="0" class="input-group">
+      <div class="card">
+        <label>ชื่อไซต์</label><input type="text" id="ex_epsite" class="input-group">
+        <label>จังหวัด</label><input type="text" id="ex_eppv" class="input-group">
+        <label>ค่าน้ำมัน (บิล No.1)</label><input type="number" id="ex_oil" value="0" class="input-group">
+        <label>ค่าที่พัก (บิล No.2)</label><input type="number" id="ex_hotel" value="0" class="input-group">
+        <label>ค่าของทำประชาคม (บิล No.3)</label><input type="number" id="ex_ccr" value="0" class="input-group">
+        <label>ค่าเดินทาง (บิล No.4)</label><input type="number" id="ex_trav" value="0" class="input-group">
       </div>
-      <button class="main-btn" onclick="toggleExpStep(3)">ต่อไป ➔</button>
+      <button class="main-btn" onclick="toggleExpStep(3)">ถัดไป ➔</button>
     </div>
+
     <div id="exp-step-3" style="display:none;">
-      <div class="card-site">
-        <label>ค่าใช้จ่ายพิเศษ (Col AX)</label>
-        <select id="ex_epspc_type" onchange="toggleDiv('ex_epspc_v', this.value!=='ไม่มี')" class="input-group">
+      <div class="card">
+        <label>ค่าใช้จ่ายพิเศษ</label>
+        <select id="ex_spc_type" onchange="toggleDiv('ex_spc_v', this.value!=='ไม่มี')">
           <option>ไม่มี</option><option>เบิกฉุกเฉิน/เงินทีม/เงินกู้</option><option>ค่าจ้างรายวัน</option><option>ค่าจ้างผู้รับเหมา</option><option>ทำฟัน (สวัสดิการ)</option><option>ค่ารักษาพยาบาล</option><option>ของใช้สำนักงาน</option>
         </select>
-        <div id="ex_epspc_v" style="display:none;"><label>จำนวนเงินพิเศษ (Col AY)</label><input type="number" id="ex_epspc_cost" value="0" class="input-group"></div>
+        <div id="ex_spc_v" style="display:none; margin-top:10px;"><label>ระบุจำนวนเงิน</label><input type="number" id="ex_spc_cost" value="0"></div>
       </div>
-      <div class="card-site">
-        <label>ค่าใช้จ่ายอื่น ๆ ไม่มีบิล</label>
-        <select id="ex_nb_type" onchange="toggleDiv('ex_nb_v', this.value!=='ไม่มี')" class="input-group">
+      <div class="card">
+        <label>ค่าใช้จ่ายไม่มีบิล</label>
+        <select id="ex_nb_type" onchange="toggleDiv('ex_nb_v', this.value!=='ไม่มี')">
           <option>ไม่มี</option><option>มีค่าใช้จ่ายที่ไม่มีบิล</option>
         </select>
-        <div id="ex_nb_v" style="display:none;"><label>ชื่อค่าใช้จ่าย (Col AZ)</label><input type="text" id="ex_epnb" class="input-group"><label>จำนวนเงิน (Col BA)</label><input type="number" id="ex_epcnb" value="0" class="input-group"></div>
+        <div id="ex_nb_v" style="display:none; margin-top:10px;">
+          <label>ระบุชื่อค่าใช้จ่าย</label><input type="text" id="ex_nb_name" class="input-group">
+          <label>ระบุจำนวนเงิน</label><input type="number" id="ex_nb_cost" value="0">
+        </div>
       </div>
-      <div class="card-site">
+      <div class="card">
         <label>ตั้งเบิกค่าประชาคม</label>
-        <select id="ex_scr_type" onchange="toggleDiv('ex_scr_v', this.value!=='ไม่มี')" class="input-group">
+        <select id="ex_scr_type" onchange="toggleDiv('ex_scr_v', this.value!=='ไม่มี')">
           <option>ไม่มี</option><option>มีตั้งเบิกค่าประชาคม</option>
         </select>
-        <div id="ex_scr_v" style="display:none;"><label>ชื่อไซต์ (Col BC)</label><input type="text" id="ex_epsname_s" class="input-group"><label>วันที่ (Col BD)</label><input type="date" id="ex_epsdate_s" class="input-group"><label>จังหวัด (Col BE)</label><input type="text" id="ex_epspro_s" class="input-group"><label>เงิน (Col BF)</label><input type="number" id="ex_epscost_s" value="0" class="input-group"></div>
+        <div id="ex_scr_v" style="display:none; margin-top:10px;">
+          <label>ชื่อไซต์</label><input type="text" id="ex_scr_name" class="input-group">
+          <label>วันที่จ่าย</label><input type="date" id="ex_scr_date" class="input-group">
+          <label>ชื่อจังหวัด</label><input type="text" id="ex_scr_pro" class="input-group">
+          <label>จำนวนเงิน</label><input type="number" id="ex_scr_cost" value="0">
+        </div>
       </div>
-      <button class="main-btn" onclick="toggleExpStep(4)">ส่งค่าใช้จ่าย/บันทึกรูป ➔</button>
+      <button class="main-btn" onclick="toggleExpStep(4)">ไปบันทึกรูปภาพ ➔</button>
     </div>
+
     <div id="exp-step-4" style="display:none;">
-      <div class="card-site" style="text-align:center;"><p>รูปภาพไม่เกิน 10 รูป (ไม่เกิน 3Mb/รูป)</p><input type="file" id="ex_files" multiple accept="image/*" class="input-group"><button class="main-btn" onclick="processExpPhotos()">อัปโหลดและสรุปผล ➔</button></div>
+      <div class="card" style="text-align:center;">
+        <label>เลือกรูปบิล (สูงสุด 10 รูป / ไม่เกิน 3Mb)</label>
+        <input type="file" id="ex_files" multiple accept="image/*" class="input-group">
+        <button class="main-btn" onclick="summarizeExpenses()">สรุปยอดและส่งข้อมูล ➔</button>
+      </div>
     </div>
-    <div id="exp-summary" style="display:none;"><div class="card-site" id="exp_summary_content"></div><button class="main-btn" onclick="showFinal('Expenses')">ยืนยันส่งข้อมูล</button><button class="main-btn back-btn" onclick="toggleExpStep(1)">แก้ไขเพิ่มเติม</button></div>
+
+    <div id="exp-summary" style="display:none;">
+      <div class="card" id="exp_sum_content"></div>
+      <button class="main-btn" onclick="submitExpenseData()">ยืนยันส่งข้อมูล</button>
+      <button class="main-btn back-btn" onclick="toggleExpStep(1)">แก้ไขข้อมูล</button>
+    </div>
   </div>
 
-  <div id="page-capture" class="page"><h2>📸 Capture Report</h2><label>เลือกวันที่</label><select id="cap_date" class="input-group"></select><button class="main-btn" onclick="alert('ดึงข้อมูลสำเร็จ!')">แสดงรายงาน</button><button class="main-btn back-btn" onclick="goHome()">กลับ</button></div>
+  <div id="page-capture" class="page">
+    <h2>📸 Capture Report</h2>
+    <label>เลือกวันที่แสดงผล</label>
+    <select id="cap_date" class="input-group"></select>
+    <div id="cap-results"></div>
+    <button class="main-btn back-btn" onclick="goHome()">กลับเมนูหลัก</button>
+  </div>
 
-  <div id="final-1" class="page" style="text-align:center;"><div style="font-size:60px; color:var(--success); margin:20px 0;"><i class="fas fa-shield-heart"></i></div><h2>บันทึกข้อมูลสำเร็จ!</h2><div style="background:#fff3e0; padding:15px; border-radius:15px; color:#e65100; font-weight:bold; margin:20px 0;">👷‍♂️ Safety First! <br> เดินทางปลอดภัยครับ</div><button class="main-btn" onclick="goHome()">กลับเมนูหลัก</button></div>
-  <div id="final-2" class="page" style="text-align:center;"><div style="font-size:60px; color:var(--success); margin:20px 0;"><i class="fas fa-check-circle"></i></div><h2>ขอบคุณที่รายงานข้อมูล!</h2><p>ระบบบันทึกเรียบร้อยแล้ว</p><button class="main-btn" onclick="goHome()">กลับเมนูหลัก</button></div>
+  <div id="final-1" class="page" style="text-align:center;">
+    <div style="font-size:60px; color:var(--success); margin:20px 0;"><i class="fas fa-check-circle"></i></div>
+    <h2>บันทึกข้อมูลสำเร็จ!</h2>
+    <p>ขอบคุณที่ร่วมเป็นส่วนหนึ่งของทีม</p>
+    <div style="background:#FFF3E0; padding:15px; border-radius:15px; border-left:5px solid #FF9800; margin:20px 0;">
+      <h3 style="color:#E65100; margin:0;">👷‍♂️ Safety First</h3>
+      <p style="margin:5px 0;">ขอให้ทำงานอย่างปลอดภัยนะครับ</p>
+    </div>
+    <button class="main-btn" onclick="goHome()">กลับเมนูหลัก</button>
+  </div>
+
+  <div id="final-2" class="page" style="text-align:center;">
+    <div style="font-size:60px; color:var(--success); margin:20px 0;"><i class="fas fa-paper-plane"></i></div>
+    <h2>ส่งข้อมูลเรียบร้อย!</h2>
+    <p>ระบบได้รับข้อมูลของคุณแล้ว ขอบคุณครับ</p>
+    <button class="main-btn" onclick="goHome()">กลับเมนูหลัก</button>
+  </div>
+
+  <div id="loader" class="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><p>กำลังบันทึกข้อมูล...</p></div>
 </div>
 
 <script>
-  let curStatus = "", gpsStr = "", base64Img = "", expPhotoCount = 0;
-  function startFlow(st) {
+  let currentFlow = "", gpsData = {}, base64Images = [];
+
+  function openFlow(flow) {
     const name = document.getElementById('main_name').value;
-    const reg = document.getElementById('main_region').value;
-    if(!name || !reg) return alert("กรุณาระบุชื่อและภาค!");
-    curStatus = st;
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    if(['Site Check In','Check In','Check Out'].includes(st)) {
-      document.getElementById('check-title').innerText = st;
-      renderCheckFields(st);
+    const region = document.getElementById('main_region').value;
+    if(!name || !region) return alert("กรุณาระบุชื่อและภาคสังกัดก่อนครับ");
+    
+    currentFlow = flow;
+    hideAllPages();
+    
+    if(['Site Check In', 'Check In', 'Check Out'].includes(flow)) {
+      document.getElementById('check-title').innerText = flow;
+      renderCheckFields(flow);
       document.getElementById('page-check').classList.add('active');
       getGPS();
-    } else {
-      let pageId = st==='Report'?'page-report-1':'page-'+st.toLowerCase();
-      document.getElementById(pageId).classList.add('active');
-      if(st==='Capture') setupCapDates();
+    } else if(flow === 'Report') {
+      document.getElementById('page-report').classList.add('active');
+    } else if(flow === 'Expenses') {
+      document.getElementById('page-expenses').classList.add('active');
+      toggleExpStep(1);
+    } else if(flow === 'Capture') {
+      setupCapture();
     }
   }
-  function renderCheckFields(st) {
+
+  function renderCheckFields(flow) {
     let html = "";
-    if(st !== 'Site Check In') {
-      html = `<label>Buddy</label><input type="text" id="f_buddy" class="input-group"><label>Car</label><input type="text" id="f_car" class="input-group"><label>Mileage</label><input type="number" id="f_mile" class="input-group"><label>PLACE</label><input type="text" id="f_place" class="input-group"><label>${st==='Check In'?'PLAN':'BRIFE'}</label><textarea id="f_plan" rows="3" class="input-group"></textarea>`;
+    if(flow !== 'Site Check In') {
+      html = `
+        <label>ทำงานกับใคร (Buddy)</label><input type="text" id="c_buddy" class="input-group">
+        <label>ใช้รถใคร</label><input type="text" id="c_car" class="input-group">
+        <label>เลขไมล์</label><input type="number" id="c_mile" class="input-group">
+        <label>สถานที่ ${flow}</label><input type="text" id="c_place" class="input-group">
+        <label>${flow === 'Check In' ? 'PLAN' : 'BRIEF'}</label><textarea id="c_plan" rows="3"></textarea>
+      `;
     }
-    document.getElementById('check-fields').innerHTML = html;
+    document.getElementById('check-dynamic-fields').innerHTML = html;
   }
-  function handlePreview(input) {
-    const reader = new FileReader();
-    reader.onload = e => { base64Img = e.target.result; document.getElementById('check-img').src = base64Img; document.getElementById('check-gps-info').innerText = "📍 "+gpsStr; document.getElementById('check-preview').style.display='block'; };
-    reader.readAsDataURL(input.files[0]);
+
+  // --- Image & GPS Logic ---
+  function previewImage(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('preview-img').src = e.target.result;
+        document.getElementById('preview-box').style.display = 'block';
+        base64Images = [e.target.result];
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
   }
+
+  function getGPS() {
+    navigator.geolocation.getCurrentPosition(pos => {
+      gpsData = {
+        stamp: new Date().toLocaleString('th-TH'),
+        code: pos.coords.latitude + "," + pos.coords.longitude,
+        addr: "กำลังค้นหาที่อยู่..."
+      };
+      document.getElementById('gps-display').innerText = "📍 พิกัด: " + gpsData.code;
+    });
+  }
+
+  // --- Report Logic ---
   function nextReportStep() {
-    if(document.getElementById('r_type').value === 'งาน CR') {
-      document.getElementById('page-report-1').classList.remove('active');
+    if(document.getElementById('r_jobtype').value === 'งาน CR') {
+      hideAllPages();
       document.getElementById('page-report-cr').classList.add('active');
-      renderCRSite(1);
-    } else { showFinal('Report'); }
+      renderCRSites(1);
+    } else {
+      submitReportData();
+    }
   }
-  function renderCRSite(n) {
-    const area = document.getElementById('cr-sites-area');
-    const html = `<div class="card-site"><h3>ไซต์ที่ ${n}</h3>${n==1?'<label>JobRegion</label><select id="s_reg" class="input-group"><option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option></select>':''}<label>Site${n}</label><input type="text" id="sn_${n}" class="input-group"><label>Province${n}</label><input type="text" id="sp_${n}" class="input-group"><label>JobSite${n}</label><select id="sj_${n}" class="input-group"><option>ลงพื้นที่ทำ CR</option><option>ลงพื้นที่ ทำประชาคม</option><option>อื่น ๆ</option></select><label>LDSite${n}</label><input type="text" id="sl_${n}" class="input-group"><label>มีไซต์ถัดไป?</label><select onchange="if(this.value.includes('${n+1}')) renderCRSite(${n+1})" class="input-group"><option>ไม่มี/ส่งรายงาน</option>${n<4?`<option>มีไซต์ที่ ${n+1}</option>`:''}</select><button class="main-btn" onclick="showFinal('Report')">ส่งรายงานทั้งหมด</button></div>`;
-    area.innerHTML += html;
+
+  function renderCRSites(n) {
+    const cont = document.getElementById('cr-container');
+    cont.innerHTML += `
+      <div class="card" id="site-card-${n}">
+        <h3>ไซต์ที่ ${n}</h3>
+        <label>ทำงานของภาค</label><select id="s_reg_${n}"><option>BKK</option><option>CR</option><option>ER</option><option>NER</option><option>NR</option><option>SR</option></select>
+        <label>ชื่อไซต์</label><input type="text" id="s_name_${n}" class="input-group">
+        <label>จังหวัด</label><input type="text" id="s_pro_${n}" class="input-group">
+        <label>เนื้องาน</label>
+        <select id="s_job_${n}" onchange="toggleDiv('s_etc_div_${n}', this.value==='อื่น ๆ')">
+          <option>ไม่ได้ลงพื้นที่ โทรติดต่อนัดประชาคม</option><option>ลงพื้นที่ทำ CR - CRL</option><option>ลงพื้นที่ทำ CR + นัดประชาคม</option><option>ลงพื้นที่ ทำประชาคม</option><option>ลงพื้นที่ทำ CR + ทำประชาคม</option><option>ลงพื้นที่ เพื่อทำงานหาที่ SA</option><option>ลงพื้นที่ เคลียร์ประเด็น (ขออนุมัติแล้ว)</option><option>อื่น ๆ</option>
+        </select>
+        <div id="s_etc_div_${n}" style="display:none; margin-top:10px;"><label>ระบุชนิดงาน</label><input type="text" id="s_etc_${n}"></div>
+        <label style="margin-top:10px;">รายละเอียดงาน</label><input type="text" id="s_det_${n}" class="input-group">
+        <label>ชื่อผู้นำ-เบอร์โทร</label><input type="text" id="s_ld_${n}" class="input-group">
+        ${n < 4 ? `<label>มีไซต์ที่ ${n+1} หรือไม่?</label><select onchange="if(this.value.includes('มี')) renderCRSites(${n+1}); this.disabled=true;"><option>ไม่มี/ส่งรายงาน</option><option>มีไซต์ที่ ${n+1}</option></select>` : ''}
+        <button class="main-btn" onclick="submitReportData()">ส่งรายงานทั้งหมด</button>
+      </div>
+    `;
   }
-  function toggleExpStep(step) {
-    for(let i=1; i<=4; i++) { document.getElementById('exp-step-'+i).style.display = 'none'; }
+
+  // --- Expenses Logic ---
+  function toggleExpStep(s) {
+    for(let i=1; i<=4; i++) document.getElementById('exp-step-'+i).style.display = 'none';
     document.getElementById('exp-summary').style.display = 'none';
-    if(step === 'summary') { document.getElementById('exp-summary').style.display = 'block'; }
-    else { document.getElementById('exp-step-'+step).style.display = 'block'; }
+    document.getElementById('exp-step-'+s).style.display = 'block';
   }
-  function processExpPhotos() {
-    expPhotoCount = document.getElementById('ex_files').files.length;
-    if(expPhotoCount > 10) return alert("เลือกรูปได้ไม่เกิน 10 รูป");
-    alert("บันทึกค่าใช้จ่ายและรูปสำเร็จแล้ว");
-    renderExpSummary();
-    toggleExpStep('summary');
+
+  function summarizeExpenses() {
+    const oil = Number(document.getElementById('ex_oil').value);
+    const hotel = Number(document.getElementById('ex_hotel').value);
+    const ccr = Number(document.getElementById('ex_ccr').value);
+    const trav = Number(document.getElementById('ex_trav').value);
+    const spc = Number(document.getElementById('ex_spc_cost').value);
+    const nb = Number(document.getElementById('ex_nb_cost').value);
+    const scr = Number(document.getElementById('ex_scr_cost').value);
+    const total = oil + hotel + ccr + trav + spc + nb + scr;
+
+    let html = `<h3>📊 สรุปค่าใช้จ่าย</h3>`;
+    if(oil > 0) html += `<p>ค่าน้ำมัน: ${oil} บาท</p>`;
+    if(hotel > 0) html += `<p>ค่าที่พัก: ${hotel} บาท</p>`;
+    if(ccr > 0) html += `<p>ค่าของประชาคม: ${ccr} บาท</p>`;
+    if(trav > 0) html += `<p>ค่าเดินทาง: ${trav} บาท</p>`;
+    if(spc > 0) html += `<p>ค่าพิเศษ: ${spc} บาท</p>`;
+    if(nb > 0) html += `<p>ไม่มีบิล: ${nb} บาท</p>`;
+    if(scr > 0) html += `<p>ค่าประชาคม (SCR): ${scr} บาท</p>`;
+    html += `<hr><h3 style="color:red;">ยอดรวมทั้งสิ้น: ${total} บาท</h3>`;
+    
+    document.getElementById('exp_sum_content').innerHTML = html;
+    toggleExpStep(0);
+    document.getElementById('exp-summary').style.display = 'block';
   }
-  function renderExpSummary() {
-    const sumDiv = document.getElementById('exp_summary_content');
-    const data = { "น้ำมัน": 'ex_epoil', "ที่พัก": 'ex_ephotel', "ประชาคม": 'ex_epccr', "เดินทาง": 'ex_eptrav', "พิเศษ": 'ex_epspc_cost', "ไม่มีบิล": 'ex_epcnb', "ประชาคม(อนุมัติ)": 'ex_epscost_s' };
-    let html = "<h3>📊 สรุปค่าใช้จ่าย</h3>", total = 0;
-    for (const [k, id] of Object.entries(data)) {
-      let val = Number(document.getElementById(id).value || 0);
-      if(val > 0) { html += `<p>${k}: <b>${val.toLocaleString()} บ.</b></p>`; total += val; }
+
+  // --- Data Submission ---
+  function submitCheckData() {
+    const data = getBasicData();
+    data.buddy = document.getElementById('c_buddy')?.value || "";
+    data.car = document.getElementById('c_car')?.value || "";
+    data.mileage = document.getElementById('c_mile')?.value || "";
+    data.place = document.getElementById('c_place')?.value || "";
+    data.plan = document.getElementById('c_plan')?.value || "";
+    data.images = base64Images;
+    data.geoStamp = gpsData.stamp;
+    data.geoCode = gpsData.code;
+    data.geoAddress = gpsData.addr;
+    
+    sendToGas(data);
+  }
+
+  function submitReportData() {
+    const data = getBasicData();
+    data.status = "Report";
+    data.buddy = document.getElementById('r_buddy').value;
+    data.date = formatDate(document.getElementById('r_date').value); // Use selected date for Report
+    data.extra = {
+      15: document.getElementById('r_jobtype').value,
+      16: document.getElementById('r_etc')?.value || "",
+      17: document.getElementById('r_detail').value
+    };
+    
+    // Add CR Site logic if applicable
+    if(data.extra[15] === 'งาน CR') {
+      for(let i=1; i<=4; i++) {
+        if(!document.getElementById('s_name_'+i)) break;
+        data.extra[18] = document.getElementById('s_reg_1').value; // JobRegion
+        let startCol = 19 + (i-1)*6; 
+        data.extra[startCol] = document.getElementById('s_name_'+i).value;
+        data.extra[startCol+1] = document.getElementById('s_pro_'+i).value;
+        data.extra[startCol+2] = document.getElementById('s_job_'+i).value;
+        data.extra[startCol+3] = document.getElementById('s_etc_'+i)?.value || "";
+        data.extra[startCol+4] = document.getElementById('s_det_'+i).value;
+        data.extra[startCol+5] = document.getElementById('s_ld_'+i).value;
+      }
     }
-    html += `<hr><p style="color:red; font-size:18px;">ยอดรวม: <b>${total.toLocaleString()} บ.</b></p><p style="color:blue;">รูปภาพ: ${expPhotoCount} รูป</p>`;
-    sumDiv.innerHTML = html;
+    sendToGas(data);
   }
-  function showFinal(st) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    if(['Site Check In','Check In'].includes(st)) { document.getElementById('final-1').classList.add('active'); }
-    else { document.getElementById('final-2').classList.add('active'); }
+
+  function submitExpenseData() {
+    const data = getBasicData();
+    data.status = "Expenses";
+    data.buddy = document.getElementById('ex_buddy').value;
+    data.date = formatDate(document.getElementById('ex_date').value);
+    data.extra = {
+      15: document.getElementById('ex_jobtype').value,
+      16: document.getElementById('ex_etc')?.value || "",
+      17: document.getElementById('ex_detail').value,
+      43: document.getElementById('ex_epsite').value,
+      44: document.getElementById('ex_eppv').value,
+      45: document.getElementById('ex_oil').value,
+      46: document.getElementById('ex_hotel').value,
+      47: document.getElementById('ex_ccr').value,
+      48: document.getElementById('ex_trav').value,
+      49: document.getElementById('ex_spc_type').value,
+      50: document.getElementById('ex_spc_cost').value,
+      51: document.getElementById('ex_nb_name').value,
+      52: document.getElementById('ex_nb_cost').value,
+      53: document.getElementById('ex_scr_type').value,
+      54: document.getElementById('ex_scr_name').value,
+      55: document.getElementById('ex_scr_date').value,
+      56: document.getElementById('ex_scr_pro').value,
+      57: document.getElementById('ex_scr_cost').value
+    };
+    
+    const files = document.getElementById('ex_files').files;
+    let loaded = 0;
+    if(files.length > 0) {
+      for(let f of files) {
+        let reader = new FileReader();
+        reader.onload = e => {
+          base64Images.push(e.target.result);
+          loaded++;
+          if(loaded === files.length) {
+            data.images = base64Images;
+            sendToGas(data);
+          }
+        };
+        reader.readAsDataURL(f);
+      }
+    } else { sendToGas(data); }
   }
-  function getGPS() { navigator.geolocation.getCurrentPosition(p => { gpsStr = p.coords.latitude.toFixed(6)+","+p.coords.longitude.toFixed(6); }, err => {}, {enableHighAccuracy:true}); }
-  function toggleDiv(id, show) { document.getElementById(id).style.display = show ? 'block' : 'none'; }
-  function goHome() { location.reload(); }
-  function setupCapDates() {
-    const sel = document.getElementById('cap_date'); sel.innerHTML = "";
-    for(let i=0; i<8; i++){
+
+  // --- Helpers ---
+  function getBasicData() {
+    return {
+      name: document.getElementById('main_name').value,
+      region: document.getElementById('main_region').value,
+      status: currentFlow,
+      date: new Date().toLocaleDateString('th-TH'),
+      time: new Date().toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'}),
+      device: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "PC"
+    };
+  }
+
+  function sendToGas(payload) {
+    document.getElementById('loader').style.display = "block";
+    google.script.run.withSuccessHandler(res => {
+      document.getElementById('loader').style.display = "none";
+      hideAllPages();
+      if(['Site Check In', 'Check In'].includes(currentFlow)) {
+        document.getElementById('final-1').classList.add('active');
+      } else {
+        document.getElementById('final-2').classList.add('active');
+      }
+    }).processForm(payload);
+  }
+
+  function setupCapture() {
+    const sel = document.getElementById('cap_date');
+    sel.innerHTML = "";
+    for(let i=0; i<8; i++) {
       let d = new Date(); d.setDate(d.getDate() - i);
-      let opt = document.createElement('option'); opt.value = d.toLocaleDateString('th-TH'); opt.innerText = d.toLocaleDateString('th-TH'); sel.appendChild(opt);
+      let ds = d.toLocaleDateString('th-TH');
+      sel.innerHTML += `<option value="${ds}">${ds}</option>`;
     }
+    document.getElementById('page-capture').classList.add('active');
   }
+
+  function formatDate(val) { if(!val) return ""; let d = new Date(val); return d.toLocaleDateString('th-TH'); }
+  function toggleDiv(id, show) { document.getElementById(id).style.display = show ? 'block' : 'none'; }
+  function hideAllPages() { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); }
+  function goHome() { location.reload(); }
 </script>
+
 </body>
 </html>
