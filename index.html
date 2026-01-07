@@ -11,23 +11,26 @@
     body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 10px; }
     .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; box-sizing: border-box; }
     h1 { color: var(--primary); text-align: center; font-size: 22px; border-bottom: 3px solid var(--warning); padding-bottom: 10px; }
+    h2 { font-size: 18px; color: var(--primary); margin-top: 0; }
     
-    /* สไตล์เมนูหลัก */
     .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
-    .btn-menu { border: none; border-radius: 15px; padding: 20px 10px; color: white; cursor: pointer; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 14px; }
+    .btn-menu { border: none; border-radius: 15px; padding: 20px 10px; color: white; cursor: pointer; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 14px; transition: 0.2s; }
+    .btn-menu:active { transform: scale(0.95); }
     .btn-site { background: #06b6d4; } .btn-in { background: #22c55e; } .btn-out { background: #f59e0b; }
     .btn-rep { background: #a855f7; } .btn-exp { background: #ec4899; } .btn-cap { background: #64748b; }
     
-    /* การซ่อน/แสดงหน้า */
     .page { display: none; }
-    .page.active { display: block !important; animation: fadeIn 0.3s ease; }
+    .active { display: block !important; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     .input-group { margin-bottom: 15px; text-align: left; }
     label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 14px; }
-    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-family: 'Kanit'; }
+    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-family: 'Kanit'; font-size: 15px; }
+    
+    .card-site { background: #f1f5f9; border-radius: 15px; padding: 15px; margin-bottom: 15px; border-left: 5px solid var(--primary); }
     .main-btn { background: var(--primary); color: white; width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; margin-top: 10px; cursor: pointer; }
     .back-btn { background: #888; margin-top: 8px; }
+    .summary-box { background: #fffde7; padding: 10px; border-radius: 10px; border: 1px solid #fbc02d; margin-top: 10px; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -37,11 +40,11 @@
   <div id="page-home" class="page active">
     <h1>2026 AEC Report</h1>
     <div class="input-group">
-      <label>ชื่อเล่น (Name)</label>
+      <label><i class="fas fa-user"></i> ชื่อเล่น (Name)</label>
       <input type="text" id="userName" placeholder="ระบุชื่อ">
     </div>
     <div class="input-group">
-      <label>ภาคที่สังกัด (Region)</label>
+      <label><i class="fas fa-globe"></i> ภาคที่สังกัด (Region)</label>
       <select id="userRegion">
         <option value="">-- เลือกภาค --</option>
         <option>BKK</option><option>CR</option><option>ER</option><option>NER</option>
@@ -59,43 +62,70 @@
   </div>
 
   <div id="page-1-3" class="page">
-    <h2 id="title-1-3" style="color:var(--primary)"></h2>
+    <h2 id="title-1-3"></h2>
     <div id="fields-1-3"></div>
-    <label>📸 ถ่ายรูป</label>
-    <input type="file" accept="image/*" capture="camera">
-    <button class="main-btn" onclick="location.reload()">ส่งข้อมูล</button>
-    <button class="main-btn back-btn" onclick="location.reload()">กลับหน้าหลัก</button>
+    <div class="input-group">
+      <label>📸 ถ่ายภาพหลักฐาน</label>
+      <input type="file" id="st-file" accept="image/*" capture="camera">
+    </div>
+    <button class="main-btn" onclick="submitData('Standard')">ส่งข้อมูล</button>
+    <button class="main-btn back-btn" onclick="goHome()">กลับหน้าหลัก</button>
   </div>
 
   <div id="page-4" class="page">
-    <h2 style="color:var(--primary)">📝 รายงาน (Report)</h2>
-    <label>ทำงานคู่กับใคร</label><input type="text">
-    <label>ประเภทงาน</label>
-    <select><option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option></select>
-    <button class="main-btn" onclick="location.reload()">ส่งรายงาน</button>
-    <button class="main-btn back-btn" onclick="location.reload()">กลับหน้าหลัก</button>
+    <h2>📝 รายงานผลการทำงาน</h2>
+    <div class="input-group">
+      <label>ทำงานคู่กับใคร</label><input type="text" id="r_buddy">
+    </div>
+    <div class="input-group">
+      <label>วันที่ทำงาน</label><input type="date" id="r_date">
+    </div>
+    <div class="input-group">
+      <label>ประเภทงานหลัก</label>
+      <select id="r_jobtype">
+        <option>งาน CR</option><option>งาน OFFICE</option><option>งาน TE</option><option>งาน DRONE</option>
+      </select>
+    </div>
+    <div id="sites-area">
+      </div>
+    <button class="main-btn" onclick="submitData('Report')">ส่งรายงานทั้งหมด</button>
+    <button class="main-btn back-btn" onclick="goHome()">กลับหน้าหลัก</button>
   </div>
 
   <div id="page-5" class="page">
-    <h2 style="color:var(--primary)">💰 ค่าใช้จ่าย (Expenses)</h2>
-    <label>ชื่อไซต์</label><input type="text">
-    <label>จำนวนเงิน</label><input type="number">
-    <button class="main-btn" onclick="location.reload()">ส่งค่าใช้จ่าย</button>
-    <button class="main-btn back-btn" onclick="location.reload()">กลับหน้าหลัก</button>
+    <h2>💰 บันทึกค่าใช้จ่าย</h2>
+    <div class="input-group"><label>ชื่อไซต์</label><input type="text" id="ex_site"></div>
+    <div class="input-group"><label>ค่าน้ำมันรถ</label><input type="number" id="ex_oil" class="calc" value="0"></div>
+    <div class="input-group"><label>ค่าที่พัก</label><input type="number" id="ex_hotel" class="calc" value="0"></div>
+    <div class="input-group"><label>ค่าใช้จ่ายพิเศษ</label><input type="number" id="ex_spc" class="calc" value="0"></div>
+    
+    <div class="summary-box">
+      <strong>ยอดรวมทั้งสิ้น: <span id="ex_total">0</span> บาท</strong>
+    </div>
+    
+    <div class="input-group" style="margin-top:15px;">
+      <label>📸 อัปโหลดบิล (หลายรูปได้)</label>
+      <input type="file" id="ex_files" multiple accept="image/*">
+    </div>
+    <button class="main-btn" onclick="submitData('Expenses')">ส่งค่าใช้จ่าย</button>
+    <button class="main-btn back-btn" onclick="goHome()">กลับหน้าหลัก</button>
   </div>
 
   <div id="page-6" class="page">
-    <h2 style="color:var(--primary)">📸 Capture</h2>
-    <label>เลือกวันที่</label>
-    <select id="date-select-6"></select>
-    <button class="main-btn">แสดงรายงาน</button>
-    <button class="main-btn back-btn" onclick="location.reload()">กลับหน้าหลัก</button>
+    <h2>📸 ดึงข้อมูลย้อนหลัง</h2>
+    <div class="input-group">
+      <label>เลือกวันที่</label>
+      <select id="date-select-6"></select>
+    </div>
+    <button class="main-btn" onclick="alert('ระบบกำลังดึงข้อมูล...')">ค้นหารายงาน</button>
+    <button class="main-btn back-btn" onclick="goHome()">กลับหน้าหลัก</button>
   </div>
 
 </div>
 
 <script>
-  // ฟังก์ชันสลับหน้า (หัวใจหลัก)
+  let siteCount = 0;
+
   function navigateTo(pageId, statusName) {
     const name = document.getElementById('userName').value;
     const region = document.getElementById('userRegion').value;
@@ -105,55 +135,84 @@
       return;
     }
 
-    // บันทึกค่าลงเครื่อง
     localStorage.setItem('aec_name', name);
     localStorage.setItem('aec_reg', region);
 
-    // 1. ซ่อนทุกหน้าที่มี Class "page"
-    const allPages = document.querySelectorAll('.page');
-    allPages.forEach(p => {
-      p.classList.remove('active');
-      p.style.display = 'none'; // บังคับซ่อน
-    });
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(pageId);
+    target.classList.add('active');
 
-    // 2. แสดงเฉพาะหน้าที่มี Id ตรงกับที่ส่งมา
-    const targetPage = document.getElementById(pageId);
-    if (targetPage) {
-      targetPage.classList.add('active');
-      targetPage.style.display = 'block'; // บังคับแสดง
-    }
-
-    // 3. จัดการข้อมูลพิเศษสำหรับหน้า 1-3
+    // ลอจิกเฉพาะหน้า 1-3
     if (pageId === 'page-1-3') {
       document.getElementById('title-1-3').innerText = "📍 " + statusName;
-      let extraHtml = "";
+      let html = "";
       if (statusName !== 'Site Check In') {
-        extraHtml = `
-          <label>ใช้รถใคร</label><input type="text">
-          <label>เลขไมล์</label><input type="number">
-          <label>สถานที่</label><input type="text">
+        html = `
+          <div class="input-group"><label>ใช้รถใคร</label><input type="text" id="f_car"></div>
+          <div class="input-group"><label>เลขไมล์</label><input type="number" id="f_mile"></div>
+          <div class="input-group"><label>สถานที่</label><input type="text" id="f_place"></div>
+          <div class="input-group"><label>แผนการทำงาน</label><textarea id="f_plan"></textarea></div>
         `;
       }
-      document.getElementById('fields-1-3').innerHTML = extraHtml;
+      document.getElementById('fields-1-3').innerHTML = html;
+    }
+
+    // ลอจิกเฉพาะหน้า 4 (สร้างไซต์แรก)
+    if (pageId === 'page-4') {
+      document.getElementById('sites-area').innerHTML = "";
+      siteCount = 0;
+      addSiteField();
     }
   }
 
-  // เมื่อโหลดหน้าเสร็จ
-  window.onload = function() {
-    // ดึงค่าเก่ามาใส่
-    if(localStorage.getItem('aec_name')) document.getElementById('userName').value = localStorage.getItem('aec_name');
-    if(localStorage.getItem('aec_reg')) document.getElementById('userRegion').value = localStorage.getItem('aec_reg');
+  function addSiteField() {
+    if (siteCount >= 4) return;
+    siteCount++;
+    const area = document.getElementById('sites-area');
+    const card = document.createElement('div');
+    card.className = "card-site";
+    card.id = "site-card-" + siteCount;
+    card.innerHTML = `
+      <strong>🏙️ ไซต์ที่ ${siteCount}</strong>
+      <div class="input-group"><label>ชื่อไซต์</label><input type="text" id="s_name_${siteCount}"></div>
+      <div class="input-group"><label>รายละเอียดงาน</label><textarea id="s_detail_${siteCount}"></textarea></div>
+      ${siteCount < 4 ? `<button type="button" onclick="addSiteField()" style="font-size:12px; cursor:pointer;">+ เพิ่มไซต์ถัดไป</button>` : ''}
+    `;
+    area.appendChild(card);
+  }
 
-    // สร้างวันที่หน้า 6
+  // ระบบคำนวณเงินหน้า 5
+  document.addEventListener('input', function (e) {
+    if (e.target.classList.contains('calc')) {
+      let total = 0;
+      document.querySelectorAll('.calc').forEach(input => {
+        total += Number(input.value) || 0;
+      });
+      document.getElementById('ex_total').innerText = total.toLocaleString();
+    }
+  });
+
+  function goHome() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-home').classList.add('active');
+  }
+
+  function submitData(type) {
+    alert("บันทึกข้อมูล " + type + " สำเร็จ!");
+    goHome();
+  }
+
+  window.onload = function() {
+    document.getElementById('userName').value = localStorage.getItem('aec_name') || "";
+    document.getElementById('userRegion').value = localStorage.getItem('aec_reg') || "";
+    
     const sel = document.getElementById('date-select-6');
-    if(sel) {
-      for(let i=0; i<8; i++){
-        let d = new Date(); d.setDate(d.getDate() - i);
-        let opt = document.createElement('option');
-        opt.value = d.toLocaleDateString('th-TH');
-        opt.innerText = d.toLocaleDateString('th-TH');
-        sel.appendChild(opt);
-      }
+    for(let i=0; i<8; i++){
+      let d = new Date(); d.setDate(d.getDate() - i);
+      let opt = document.createElement('option');
+      opt.value = d.toLocaleDateString('th-TH');
+      opt.innerText = d.toLocaleDateString('th-TH');
+      sel.appendChild(opt);
     }
   };
 </script>
